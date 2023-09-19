@@ -1,10 +1,17 @@
 package org.com;
 
-import org.com.entity.Movie;
+import jakarta.transaction.Transactional;
+import org.com.entity.*;
 import org.com.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Component
 public class MyCommandLineRunner implements CommandLineRunner {
@@ -15,26 +22,62 @@ public class MyCommandLineRunner implements CommandLineRunner {
     private SeatRepository seatRepository;
     private UserRepository userRepository;
     private TicketRepository ticketRepository;
+    private RoleRepository roleRepository;
 
     @Autowired
     public MyCommandLineRunner(CinemaRepository repository,
                                MovieRepository movieRepository,
                                RoomRepository roomRepository,
                                SeatRepository seatRepository,
-                               UserRepository userRepository, TicketRepository ticketRepository) {
+                               UserRepository userRepository,
+                               TicketRepository ticketRepository,
+                               RoleRepository roleRepository) {
         this.cinemaRepository = repository;
         this.movieRepository = movieRepository;
         this.roomRepository = roomRepository;
         this.seatRepository = seatRepository;
         this.userRepository = userRepository;
         this.ticketRepository = ticketRepository;
+        this.roleRepository = roleRepository;
     }
 
     @Override
+    @Transactional
     public void run(String... args) throws Exception {
+    }
+    public void createUsers() {
+        Role newRole = new Role("ROLE_CUSTOMER");
+        roleRepository.save(newRole);
+        User ahmad = new User("ahmad omar", "ahmad", "12321", List.of(newRole));
+        User ali = new User("ali omar", "ali", "12321", List.of(newRole));
+        User sara = new User("sara omari", "sara", "12321", List.of(newRole));
+        userRepository.saveAll(List.of(ahmad, ali, sara));
+    }
 
-        Movie shatterd = new Movie("shutter Island", (short) 200, 7.9F);
-        movieRepository.save(shatterd);
 
+    public void createCinemas() {
+        Movie avengers = new Movie("avengers", (short) 120, 7.9F);
+        Movie shutter = new Movie("shutter Island", (short) 150, 8.5F);
+        Movie Frozen = new Movie("Frozen", (short) 180, 8.2F);
+        Room room = new Room("A", 64);
+        roomRepository.save(room);
+        movieRepository.save(avengers);
+        movieRepository.save(shutter);
+        movieRepository.save(Frozen);
+
+        Cinema cinema1 = new Cinema(LocalTime.of(3, 0).toString(),
+                LocalDate.of(2023, 10, 1).toString(),
+                (short) 64,
+                15, room, avengers);
+
+        Cinema cinema2 = new Cinema(LocalTime.of(3, 0).toString(),
+                LocalDate.of(2023, 10, 2).toString(),
+                (short) 64,
+                15, room, shutter);
+        Cinema cinema3 = new Cinema(LocalTime.of(2, 0).toString(),
+                LocalDate.of(2023, 10, 3).toString(),
+                (short) 64,
+                15, room, Frozen);
+        cinemaRepository.saveAll(List.of(cinema1, cinema2, cinema3));
     }
 }

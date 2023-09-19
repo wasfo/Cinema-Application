@@ -2,10 +2,15 @@ package org.com.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "users_tickets")
-@Data
+@Setter
+@Getter
+@NoArgsConstructor
 public class Ticket {
 
     @Id

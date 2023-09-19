@@ -3,10 +3,13 @@ package org.com.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
 @Table(name = "rooms")
+@NoArgsConstructor
+
 public class Room {
 
     @Id
@@ -14,10 +17,14 @@ public class Room {
     @Column(name = "id")
     private long id;
 
-    @Column(name = "room_number")
-    private int number;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "number_of_seats")
     private int numberOfSeats;
 
+    public Room(String name, int numberOfSeats) {
+        this.name = name;
+        this.numberOfSeats = numberOfSeats;
+    }
 }

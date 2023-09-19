@@ -2,14 +2,15 @@ package org.com.entity;
 
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.context.annotation.DependsOn;
 
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class Movie {
 
     @Id
@@ -17,7 +18,7 @@ public class Movie {
     @Column(name = "id")
     private long id;
 
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     private String name;
 
     @Column(name = "duration")
@@ -26,12 +27,21 @@ public class Movie {
     @Column(name = "rating")
     private float rating;
 
-    @OneToMany(mappedBy = "movie")
+    @OneToMany(mappedBy = "movie", fetch = FetchType.EAGER)
     private List<Cinema> cinemas;
 
     public Movie(String name, short durationInMinutes, float rating) {
         this.name = name;
         this.durationInMinutes = durationInMinutes;
         this.rating = rating;
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "name='" + name + '\'' +
+                ", durationInMinutes=" + durationInMinutes +
+                ", rating=" + rating +
+                '}';
     }
 }
