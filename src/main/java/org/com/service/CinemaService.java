@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,6 +29,11 @@ public class CinemaService {
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
 
+    }
+
+    public CinemaDto findById(Long id) {
+        Optional<Cinema> cinema = cinemaRepository.findById(id);
+        return convertToDto(cinema.get());
     }
 
     private CinemaDto convertToDto(Cinema cinema) {

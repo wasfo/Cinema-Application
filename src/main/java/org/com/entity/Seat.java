@@ -12,11 +12,10 @@ import lombok.Setter;
 @Table(name = "reserved_seats")
 @NoArgsConstructor
 public class Seat {
-    private enum seatType {
+    public enum seatType {
         CLASSIC,
         PREMIUM
     }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
