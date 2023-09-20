@@ -34,20 +34,14 @@
                     <h3 class="text-center">Login Form</h3>
                 </div>
                 <div class="card-body">
-                    <form
-                            method="post"
-                            th:action="@{/login}"
-                            class="form-horizontal"
-                            role="form"
-                    >
+                    <form method="post" th:action="@{/login-process}" class="form-horizontal" role="form">
                         <div class="mb-3">
                             <label for="username" class="control-label">Email *</label>
                             <input type="text"
                                    id="username"
                                    name="username"
                                    class="form-control"
-                                   placeholder="Email"
-                            />
+                                   placeholder="Email"/>
                         </div>
 
                         <div class="mb-3">
@@ -63,7 +57,7 @@
                         <div class="mb-3">
                             <button type="submit" class="btn btn-primary">Login</button>
                             <span> Not registered?
-                            <a th:href="@{/register}"> Register/SignUp Here</a>
+                            <a th:href="@{/register}"> Sign up</a>
                         </span>
                         </div>
                     </form>

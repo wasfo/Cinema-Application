@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration and Login System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+
+    <style>
+    .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logout-btn {
+        position: absolute;
+        top: 10px;
+        right: 50px;
+        font-size: 20px;
+        color: ##F0FFFF;
+    }
+    .register-btn {
+        position: absolute;
+        top: 10px;
+        right: 150px;
+        font-size: 20px;
+        color: ##F0FFFF;
+    }
+    .text-style {
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #007bff; /* Blue color */
+    }
+    .time{
+    font-style: italic;
+    text-decoration: underline;
+    }
+    .price{
+    font-weight: bold;
+    background-color: #ffc107;
+    border: 1px solid #333;
+    border-radius: 5px;
+    padding: 5px 10px;
+    box-shadow: 3px 3px 5px #888888;
+    color: #dc3545;
+    }
+    .price:hover {
+    background-color: #ffdb58;
+    transform: scale(1.15);
+    cursor: pointer;
+}
+
+    .movie-catalog {
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .movie-catalog-text h2 {
+        margin: 5px;
+        font-size: 32px; /* Larger Font Size */
+        font-family: 'Arial', sans-serif; /* Font Family */
+        text-align: center;
+        padding: 20px;
+        background-color: #2e3b4e; /* Deep Blue Background Color */
+        color: #ffffff; /* White Text Color */
+        border-radius: 10px; /* Rounded Corners */
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Subtle Box Shadow */
+    }
+
+
+
+
+
+
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Cinema Website</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+
+                <li id="custom-item" class="nav-item">
+                    <form action="#" th:action="@{/register}" method="post" class="register-btn">
+                        <button type="submit" class="btn btn-success">Register</button>
+                    </form>
+                </li>
+
+                <li class="nav-item">
+                    <div>
+                        <form action="#" th:action="@{/logout}" method="post" class="logout-btn">
+                            <button type="submit" class="btn btn-danger">Logout</button>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container">
+    <div class="movie-catalog-text">
+        <h2> Movies Catalogue </h2>
+    </div>
+
+    <div class="movie-catalog">
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="table-dark">
+            <tr>
+                <th>Movie Name</th>
+                <th>Show Time</th>
+                <th>Show Date</th>
+                <th>Available seats</th>
+                <th>Ticket Price</th>
+                <th>Room Name</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="cinema: ${cinemas}">
+                <td th:text="${cinema.movie.name}" class="text-style"></td>
+                <td th:text="${cinema.showtime}" class="time"></td>
+                <td th:text="${cinema.showdate}" class="time"></td>
+                <td th:text="${cinema.availableseats}"></td>
+                <td th:text="${cinema.price} +'$'" class="price"></td>
+                <td th:text="${cinema.room.name}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

@@ -36,7 +36,7 @@ public class UserService {
         user.setEmail(userDto.getEmail());
 
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        Role role = roleRepository.findByName("ROLE_CUSTOMER");
+        Role role = roleRepository.findByName("CUSTOMER");
         if (role == null) {
             role = createCustomerRole();
         }
@@ -54,11 +54,11 @@ public class UserService {
     public List<UserDto> findAllUsers() {
         List<User> users = userRepository.findAll();
         return users.stream()
-                .map(this::convertEntityToDto)
+                .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
 
-    private UserDto convertEntityToDto(User user) {
+    private UserDto convertToDto(User user) {
         UserDto userDto = new UserDto();
         String[] name = user.getFullName().split(" ");
         userDto.setFirstName(name[0]);
@@ -69,7 +69,7 @@ public class UserService {
 
     private Role createCustomerRole() {
         Role role = new Role();
-        role.setName("ROLE_CUSTOMER");
+        role.setName("CUSTOMER");
         return roleRepository.save(role);
     }
 }
