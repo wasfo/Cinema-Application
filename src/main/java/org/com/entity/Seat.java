@@ -28,7 +28,7 @@ public class Seat {
     @Column(name = "number")
     private int seatNumber;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cinema_id")
     private Cinema cinema;
 }

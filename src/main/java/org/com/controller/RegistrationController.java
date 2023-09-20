@@ -45,7 +45,7 @@ public class RegistrationController {
             model.addAttribute("user", user);
             return "register";
         }
-        userService.saveUser(user);
+        userService.saveUser(user,"ROLE_CUSTOMER");
         return "redirect:/register?success";
     }
 }

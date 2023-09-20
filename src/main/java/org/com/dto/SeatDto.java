@@ -14,4 +14,9 @@ public class SeatDto {
     private Seat.seatType seatType;
     private int seatNumber;
     private Cinema cinema;
+
+    public SeatDto(int seatNumber, Seat.seatType seatType) {
+        this.seatType = seatType;
+        this.seatNumber = seatNumber;
+    }
 }

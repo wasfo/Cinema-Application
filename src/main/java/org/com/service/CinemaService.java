@@ -9,6 +9,7 @@ import org.com.repository.CinemaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.AccessMode;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -38,7 +39,7 @@ public class CinemaService {
 
     private CinemaDto convertToDto(Cinema cinema) {
         CinemaDto cinemaDto = new CinemaDto();
-
+        cinemaDto.setId(cinema.getId());
         cinemaDto.setPrice(cinema.getPrice());
         cinemaDto.setMovie(cinema.getMovie());
         cinemaDto.setAvailableseats(cinema.getAvailableseats());
@@ -48,12 +49,15 @@ public class CinemaService {
         return cinemaDto;
     }
 
-    public boolean createCinema(Cinema cinema) {
-        try {
-            cinemaRepository.save(cinema);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return true;
+    public void createCinema(CinemaDto cinemaDto) {
+        Cinema cinema = new Cinema(
+                cinemaDto.getShowtime(),
+                cinemaDto.getShowdate(),
+                cinemaDto.getAvailableseats(),
+                cinemaDto.getPrice(),
+                cinemaDto.getRoom(),
+                cinemaDto.getMovie());
+
+        cinemaRepository.save(cinema);
     }
 }

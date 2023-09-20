@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Cinema</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+</head>
+<style>
+    body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        form {
+            text-align: left;
+            width: 350px; /* Adjust the width as needed */
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .center-button {
+            display: flex;
+            justify-content: center;
+        }
+
+
+
+
+
+
+
+
+</style>
+
+
+<body>
+
+<form th:object="${cinemaDto}" th:action="@{/admin/cinema/create}" method="post" class="form-horizontal">
+    <h1>Create Cinema</h1>
+    <div class="mb-3">
+        <label for="showtime" class="form-label">Show time:</label>
+        <input type="time" id="showtime" th:field="*{showtime}" class="form-control">
+    </div>
+
+    <div class="mb-3">
+        <label for="showdate">Show date:</label>
+        <input type="date" id="showdate" th:field="*{showdate}" class="form-control"><br>
+    </div>
+
+    <div class="mb-3">
+        <label for="price">Price:</label>
+        <input type="number" id="price" th:field="*{price}" step="0.01" class="form-control"><br>
+    </div>
+    <!-- Room Selection -->
+    <div class="mb-3">
+        <label for="room">Room:</label>
+        <select class="form-select" id="room">
+            <option value="">Select a Room</option>
+            <th:block th:each="room : ${rooms}">
+                <option th:value="${room.id}" th:text="${room.name}"></option>
+            </th:block>
+        </select>
+    </div>
+    <br>
+
+    <!-- Movie Selection -->
+    <div class="mb-3">
+        <label for="movie">Movie:</label>
+        <select class="form-select" id="movie" th:field="*{movie.id}">
+            <option value="">Select a Movie</option>
+            <th:block th:each="movie : ${movies}">
+                <option th:value="${movie.id}" th:text="${movie.name}"></option>
+            </th:block>
+        </select><br>
+    </div>
+
+    <div class="center-button">
+        <button type="submit" class="btn btn-secondary btn-lg">Create Cinema</button>
+    </div>
+</form>
+</body>
+</html>

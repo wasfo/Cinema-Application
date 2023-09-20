@@ -5,6 +5,7 @@ import org.com.entity.*;
 import org.com.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -23,6 +24,9 @@ public class MyCommandLineRunner implements CommandLineRunner {
     private UserRepository userRepository;
     private TicketRepository ticketRepository;
     private RoleRepository roleRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     public MyCommandLineRunner(CinemaRepository repository,
@@ -45,13 +49,20 @@ public class MyCommandLineRunner implements CommandLineRunner {
     @Transactional
     public void run(String... args) throws Exception {
     }
+
     public void createUsers() {
-        Role newRole = new Role("ROLE_CUSTOMER");
-        roleRepository.save(newRole);
-        User ahmad = new User("ahmad omar", "ahmad", "12321", List.of(newRole));
-        User ali = new User("ali omar", "ali", "12321", List.of(newRole));
-        User sara = new User("sara omari", "sara", "12321", List.of(newRole));
-        userRepository.saveAll(List.of(ahmad, ali, sara));
+        Role admin = new Role("ROLE_ADMIN");
+        Role user = new Role("ROLE_USER");
+        String password = "12321";
+        roleRepository.saveAll(List.of(admin, user));
+        User ahmad = new User("ahmad omar", "ahmad", "12321", List.of(user));
+        User ali = new User("ali omar", "ali", "12321", List.of(user));
+        User sara = new User("sara omari", "sara", "12321", List.of(user));
+        User adminUser = new User("ahmad wasfi",
+                "admin",
+                passwordEncoder.encode(password), List.of(admin));
+
+        userRepository.saveAll(List.of(ahmad, ali, sara, adminUser));
     }
 
 

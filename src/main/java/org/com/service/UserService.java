@@ -30,13 +30,13 @@ public class UserService {
     }
 
 
-    public void saveUser(UserDto userDto) {
+    public void saveUser(UserDto userDto, String roleToGive) {
         User user = new User();
         user.setFullName(userDto.getFirstName() + " " + userDto.getLastName());
         user.setEmail(userDto.getEmail());
 
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        Role role = roleRepository.findByName("CUSTOMER");
+        Role role = roleRepository.findByName(roleToGive);
         if (role == null) {
             role = createCustomerRole();
         }
@@ -69,7 +69,7 @@ public class UserService {
 
     private Role createCustomerRole() {
         Role role = new Role();
-        role.setName("CUSTOMER");
+        role.setName("ROLE_CUSTOMER");
         return roleRepository.save(role);
     }
 }

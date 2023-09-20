@@ -31,7 +31,7 @@
         color: ##F0FFFF;
     }
     .text-style {
-     font-style: Lucida Console;
+    font-style: Segoe UI;
     font-weight: bold;
     text-transform: uppercase;
     color: #007bff; /* Blue color */
@@ -43,7 +43,7 @@
     }
     .price{
     font-weight: bold;
-    background-color: #ffc107;
+    background-color: #fefbd8;
     border: 1px solid #333;
     border-radius: 5px;
     padding: 5px 10px;
@@ -99,6 +99,7 @@
                     </form>
                 </li>
 
+
                 <li class="nav-item">
                     <div>
                         <form action="#" th:action="@{/logout}" method="post" class="logout-btn">
@@ -125,8 +126,9 @@
                 <th>Show Time</th>
                 <th>Show Date</th>
                 <th>Available seats</th>
-                <th>Ticket Price</th>
                 <th>Room Name</th>
+                <th>Ticket Price</th>
+
             </tr>
             </thead>
             <tbody>
@@ -135,8 +137,13 @@
                 <td th:text="${cinema.showtime}" class="time"></td>
                 <td th:text="${cinema.showdate}" class="time"></td>
                 <td th:text="${cinema.availableseats}"></td>
-                <td th:text="${cinema.price} +'$'" class="price"></td>
                 <td th:text="${cinema.room.name}"></td>
+                <td colspan="2">
+                    <span th:text="${cinema.price} +'$'" class="price"></span>
+                    <form th:action="@{'/cinemas/' + ${cinema.id} + '/seats'}" method="get">
+                        <button type="submit" class="btn  btn-warning">Buy Ticket</button>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>
