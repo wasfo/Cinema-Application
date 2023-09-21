@@ -22,4 +22,7 @@ public class RoomService {
         return roomRepository.findAll();
     }
 
+    public Room findRoomById(long roomId) {
+        return roomRepository.findById(roomId).get();
+    }
 }

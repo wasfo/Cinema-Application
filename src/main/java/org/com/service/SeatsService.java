@@ -31,7 +31,8 @@ public class SeatsService {
         int[] excluded = new int[64];
         int c = 0;
         for (SeatDto seatDto : seatDtos) {
-            excluded[c] = seatDto.getSeatNumber();
+            seatDto.setReserved(true);
+            excluded[c] = seatDto.getSeatNumber(); // 0 1 2 3 4 5          // 5 4 11 33 60
             c++;
         }
         List<SeatDto> availableSeats = new ArrayList<>();
@@ -40,6 +41,7 @@ public class SeatsService {
                 SeatDto seatDto = (i <= 8)
                         ? new SeatDto(i, Seat.seatType.PREMIUM)
                         : new SeatDto(i, Seat.seatType.CLASSIC);
+                seatDto.setReserved(false);
                 availableSeats.add(seatDto);
             }
         }
@@ -49,7 +51,7 @@ public class SeatsService {
     public SeatDto mapSeatToDto(Seat seat) {
         SeatDto seatDto = new SeatDto();
         seatDto.setSeatNumber(seat.getSeatNumber());
-        seatDto.setCinema(seat.getCinema());
+        seatDto.setCinemaId(seat.getCinema().getId());
         seatDto.setSeatType(seat.getSeatType());
         return seatDto;
     }

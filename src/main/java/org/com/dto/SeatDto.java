@@ -13,7 +13,8 @@ import org.com.entity.Seat;
 public class SeatDto {
     private Seat.seatType seatType;
     private int seatNumber;
-    private Cinema cinema;
+    private boolean isReserved;
+    private long cinemaId;
 
     public SeatDto(int seatNumber, Seat.seatType seatType) {
         this.seatType = seatType;

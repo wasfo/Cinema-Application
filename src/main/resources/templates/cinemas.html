@@ -10,6 +10,11 @@
           crossorigin="anonymous">
 
     <style>
+    body {
+    background-image: url('/images/wood.jpg');
+    background-size: cover; /* Adjust as needed */
+    background-repeat: no-repeat;
+    }
     .navbar {
             display: flex;
             justify-content: space-between;
@@ -91,7 +96,6 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
 
                 <li id="custom-item" class="nav-item">
                     <form action="#" th:action="@{/register}" method="post" class="register-btn">

@@ -3,6 +3,7 @@ package org.com.controller;
 
 import jakarta.validation.Valid;
 import org.com.dto.CinemaDto;
+import org.com.dto.MovieDto;
 import org.com.entity.Movie;
 import org.com.entity.Room;
 import org.com.service.CinemaService;
@@ -11,10 +12,7 @@ import org.com.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -46,23 +44,39 @@ public class AdminController {
 
     @GetMapping("/cinema/create")
     public String showCreateCinemaForm(Model model) {
-        System.out.println("HERE!!!!!!!!!!!!!!!!! INSIDE CREATE CINEMA");
         model.addAttribute("cinemaDto", new CinemaDto());
 
         List<Movie> movieList = movieService.findAllMovies();
+
         model.addAttribute("movies", movieList);
 
         List<Room> roomList = roomService.findAllRooms();
         model.addAttribute("rooms", roomList);
 
-        System.out.println(roomList);
         return "createcinema";
     }
 
     @PostMapping("/cinema/create")
-    public String createCinema(@ModelAttribute CinemaDto cinemaDto) {
+    public String createCinema(@ModelAttribute CinemaDto cinemaDto,
+                               @RequestParam("movieId") long movieId,
+                               @RequestParam("roomId") long roomId) {
 
-        System.out.println(cinemaDto);
+        Room room = roomService.findRoomById(roomId);
+        Movie movie = movieService.findById(movieId);
+        cinemaDto.setRoom(room);
+        cinemaDto.setMovie(movie);
+        cinemaService.createCinema(cinemaDto);
+        return "redirect:/cinemas";
+    }
+    @DeleteMapping("/seats/deleteAll")
+    public String deleteSeats(@PathVariable long cinemaId) {
+
+        return "redirect:/cinemas";
+    }
+
+    @DeleteMapping("/cinema/delete/{cinemaId}")
+    public String deleteCinema(@PathVariable long cinemaId) {
+
         return "redirect:/cinemas";
     }
 

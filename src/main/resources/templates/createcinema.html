@@ -36,6 +36,7 @@
 
 
 
+
 </style>
 
 
@@ -60,7 +61,7 @@
     <!-- Room Selection -->
     <div class="mb-3">
         <label for="room">Room:</label>
-        <select class="form-select" id="room">
+        <select class="form-select" id="room" name="roomId">
             <option value="">Select a Room</option>
             <th:block th:each="room : ${rooms}">
                 <option th:value="${room.id}" th:text="${room.name}"></option>
@@ -72,11 +73,9 @@
     <!-- Movie Selection -->
     <div class="mb-3">
         <label for="movie">Movie:</label>
-        <select class="form-select" id="movie" th:field="*{movie.id}">
+        <select class="form-select" id="movie" name="movieId">
             <option value="">Select a Movie</option>
-            <th:block th:each="movie : ${movies}">
-                <option th:value="${movie.id}" th:text="${movie.name}"></option>
-            </th:block>
+            <option th:each="movie : ${movies}" th:value="${movie.id}" th:text="${movie.name}"></option>
         </select><br>
     </div>
 

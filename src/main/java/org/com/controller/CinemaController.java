@@ -31,10 +31,6 @@ public class CinemaController {
 
     @GetMapping("/cinemas")
     public String listAllCinemas(Model model) {
-        System.out.println("----------------------------------------------------");
-        System.out.println("name -> " + SecurityContextHolder.getContext().getAuthentication().getName());
-        System.out.println("role -> " + SecurityContextHolder.getContext().getAuthentication().getAuthorities());
-        System.out.println("----------------------------------------------------");
         List<CinemaDto> cinemas = cinemaService.findAllCinemas();
         model.addAttribute("cinemas", cinemas);
         return "cinemas";
