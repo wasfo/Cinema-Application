@@ -9,5 +9,8 @@ import java.util.List;
 @Repository
 public interface SeatRepository extends JpaRepository<Seat, Long> {
 
-    List<Seat> findByCinemaId(long cinemaId);
+    public List<Seat> findByCinemaId(long cinemaId);
+
+    public Seat findBySeatNumber(int seatNum);
+
 }

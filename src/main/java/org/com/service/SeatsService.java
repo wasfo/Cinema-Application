@@ -2,7 +2,11 @@ package org.com.service;
 
 
 import org.com.dto.SeatDto;
+import org.com.entity.Cinema;
 import org.com.entity.Seat;
+import org.com.entity.User;
+import org.com.exceptions.CinemaNotFoundException;
+import org.com.exceptions.SeatAlreadyReservedException;
 import org.com.repository.SeatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,11 +18,13 @@ import java.util.stream.Collectors;
 @Service
 public class SeatsService {
 
-    private SeatRepository seatRepository;
+    private final SeatRepository seatRepository;
+    private CinemaService cinemaService;
 
     @Autowired
-    public SeatsService(SeatRepository seatRepository) {
+    public SeatsService(SeatRepository seatRepository, CinemaService cinemaService) {
         this.seatRepository = seatRepository;
+        this.cinemaService = cinemaService;
     }
 
     public List<SeatDto> findAvailableSeats(Long cinemaId) {
@@ -46,6 +52,22 @@ public class SeatsService {
             }
         }
         return availableSeats;
+    }
+
+    public Seat findBySeatNumber(int seatNum) {
+        return seatRepository.findBySeatNumber(seatNum);
+    }
+
+    public int reserveSeat(Cinema cinema, User user, int seatNumber) throws SeatAlreadyReservedException {
+
+        try {
+            Seat seat = new Seat(seatNumber, cinema);
+            seatRepository.save(seat);
+            return seatNumber;
+        } catch (Exception e) {
+            throw new SeatAlreadyReservedException("this seat has been already reserved.");
+        }
+
     }
 
     public SeatDto mapSeatToDto(Seat seat) {

@@ -33,4 +33,10 @@ public class Ticket {
     @JoinColumn(name = "room_id")
     private Room room;
 
+    public Ticket(Cinema cinema, User user, Seat seat, Room room) {
+        this.cinema = cinema;
+        this.user = user;
+        this.seat = seat;
+        this.room = room;
+    }
 }

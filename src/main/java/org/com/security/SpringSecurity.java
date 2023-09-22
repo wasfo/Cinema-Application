@@ -30,8 +30,9 @@ public class SpringSecurity {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.
                 authorizeHttpRequests((authorize) ->
-                        authorize.requestMatchers("/**").permitAll()
-                                .requestMatchers("/home").permitAll()
+                        authorize.requestMatchers("/images/**").permitAll()
+                                .requestMatchers("/styles/**").permitAll()
+                                .requestMatchers("/register/**").permitAll()
                                 .requestMatchers("/cinemas/**").permitAll()
                                 .requestMatchers("/seats/**").permitAll()
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
@@ -41,7 +42,7 @@ public class SpringSecurity {
                         form -> form
                                 .loginPage("/login")
                                 .loginProcessingUrl("/login-process")
-                                .defaultSuccessUrl("/cinemas")
+                                .defaultSuccessUrl("/successLogin")
                                 .permitAll())
                 .logout(LogoutConfigurer::permitAll);
         return http.build();

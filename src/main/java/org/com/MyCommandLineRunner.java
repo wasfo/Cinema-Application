@@ -54,14 +54,14 @@ public class MyCommandLineRunner implements CommandLineRunner {
     public void createUsers() {
         Role admin = new Role("ROLE_ADMIN");
         Role user = new Role("ROLE_USER");
-        String password = "12321";
+        String password = passwordEncoder.encode("12321");
         roleRepository.saveAll(List.of(admin, user));
-        User ahmad = new User("ahmad omar", "ahmad", "12321", List.of(user));
-        User ali = new User("ali omar", "ali", "12321", List.of(user));
-        User sara = new User("sara omari", "sara", "12321", List.of(user));
+        User ahmad = new User("ahmad omar", "ahmad", password, List.of(user));
+        User ali = new User("ali omar", "ali", password, List.of(user));
+        User sara = new User("sara omari", "sara", password, List.of(user));
         User adminUser = new User("ahmad wasfi",
                 "admin",
-                passwordEncoder.encode(password), List.of(admin));
+                password, List.of(admin));
 
         userRepository.saveAll(List.of(ahmad, ali, sara, adminUser));
     }

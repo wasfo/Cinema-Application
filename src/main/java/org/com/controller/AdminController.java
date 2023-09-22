@@ -68,6 +68,7 @@ public class AdminController {
         cinemaService.createCinema(cinemaDto);
         return "redirect:/cinemas";
     }
+
     @DeleteMapping("/seats/deleteAll")
     public String deleteSeats(@PathVariable long cinemaId) {
 
@@ -77,6 +78,14 @@ public class AdminController {
     @DeleteMapping("/cinema/delete/{cinemaId}")
     public String deleteCinema(@PathVariable long cinemaId) {
 
+        return "redirect:/cinemas";
+    }
+
+    @GetMapping("/cinema/{cinemaId}/stats")
+    public String getStatistics(@PathVariable long cinemaId) {
+        System.out.println("number of purchased tickets");
+        System.out.println("current income");
+        System.out.println("total income");
         return "redirect:/cinemas";
     }
 

@@ -5,6 +5,7 @@ import org.com.dto.CinemaDto;
 import org.com.dto.UserDto;
 import org.com.entity.Cinema;
 import org.com.entity.User;
+import org.com.exceptions.CinemaNotFoundException;
 import org.com.repository.CinemaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,9 +33,10 @@ public class CinemaService {
 
     }
 
-    public CinemaDto findById(Long id) {
-        Optional<Cinema> cinema = cinemaRepository.findById(id);
-        return convertToDto(cinema.get());
+    public Cinema findById(Long cinemaId) throws CinemaNotFoundException {
+        Cinema cinema = cinemaRepository
+                .findById(cinemaId).orElseThrow(() -> new CinemaNotFoundException("Cinema not found"));
+        return cinema;
     }
 
     private CinemaDto convertToDto(Cinema cinema) {
