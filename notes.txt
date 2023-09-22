@@ -1,0 +1,7 @@
+1) Use controller advice for exceptions.
+
+2) finish admin actions first.
+
+3) do seat reservations
+
+4) lastly do some validations.
