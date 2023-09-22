@@ -1,20 +1,19 @@
 package org.com.controller;
 
 
-import jakarta.validation.Valid;
 import org.com.dto.CinemaDto;
-import org.com.dto.MovieDto;
+import org.com.dto.TicketStatisticDto;
 import org.com.entity.Movie;
 import org.com.entity.Room;
 import org.com.service.CinemaService;
 import org.com.service.MovieService;
 import org.com.service.RoomService;
+import org.com.service.StatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -23,21 +22,22 @@ public class AdminController {
 
     private final CinemaService cinemaService;
     private final MovieService movieService;
-    private RoomService roomService;
+    private final StatisticsService statisticsService;
+    private final RoomService roomService;
 
 
     @Autowired
     public AdminController(CinemaService cinemaService,
                            MovieService movieService,
-                           RoomService roomService) {
+                           StatisticsService statisticsService, RoomService roomService) {
         this.cinemaService = cinemaService;
         this.movieService = movieService;
+        this.statisticsService = statisticsService;
         this.roomService = roomService;
     }
 
     @GetMapping
     public String admin() {
-        System.out.println("HERE!!!!!!!!!!!!!!!!! INSIDE ADMIN");
         return "admin/admin_manager";
     }
 
@@ -52,7 +52,7 @@ public class AdminController {
         List<Room> roomList = roomService.findAllRooms();
         model.addAttribute("rooms", roomList);
 
-        return "createcinema";
+        return "admin/createcinema";
     }
 
     @PostMapping("/cinema/create")
@@ -76,16 +76,18 @@ public class AdminController {
 
     @DeleteMapping("/cinema/delete/{cinemaId}")
     public String deleteCinema(@PathVariable long cinemaId) {
-
         return "redirect:/cinemas";
     }
 
-    @GetMapping("/cinema/{cinemaId}/stats")
-    public String getStatistics(@PathVariable long cinemaId) {
-        System.out.println("number of purchased tickets");
-        System.out.println("current income");
-        System.out.println("total income");
-        return "redirect:/cinemas";
+    @GetMapping("/cinema/stats")
+    public String getStatistics(Model model) {
+        List<TicketStatisticDto> stats = statisticsService.getMovieTicketStatistics();
+        long totalIncome = statisticsService.getTotalIncome(stats);
+
+        model.addAttribute("stats", stats);
+        model.addAttribute("totalIncome", totalIncome);
+
+        return "admin/statistics";
     }
 
 }

@@ -12,7 +12,7 @@
 
 
 <div class="container mt-5">
-    <h1 class="text-center">Admin Manager</h1>
+    <h1 class="text-center" style="color: lightgrey; font-weight: bold; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;">Admin Manager</h1>
     <div class="row mt-4">
         <!-- Card 1 -->
 
@@ -21,7 +21,7 @@
             <div class="card-body">
                 <h5 class="card-title">Statistics</h5>
                 <p class="card-text">see statistics and reports</p>
-                <a th:href="@{/admin/stats}" class="btn btn-primary">See more</a>
+                <a th:href="@{/admin/cinema/stats}" class="btn btn-primary">See more</a>
             </div>
         </div>
 
@@ -40,7 +40,7 @@
         <!-- Card 3 -->
 
         <div class="card">
-            <img src="/images/LoL.jpg" class="card-img-top">
+            <img src="/images/cinema.jpg" class="card-img-top">
             <div class="card-body">
                 <h5 class="card-title">Cinemas</h5>
                 <p class="card-text">create more cinemas.</p>
@@ -53,7 +53,7 @@
         <div class="card">
             <img src="/images/users.png" class="card-img-top">
             <div class="card-body">
-                <h5 class="card-title">Card title</h5>
+                <h5 class="card-title">Users Information</h5>
                 <p class="card-text">see users registered and tickets.</p>
                 <a th:href="@{/admin/cinema/create}" class="btn btn-primary">See more</a>
             </div>

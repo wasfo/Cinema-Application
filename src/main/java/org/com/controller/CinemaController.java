@@ -76,7 +76,7 @@ public class CinemaController {
         Seat seat = seatsService.findBySeatNumber(Integer.parseInt(seatNumber));
 
         ticketService.createTicket(cinema, user.get(), seat);
-        return "redirect:/cinemas/seats?cinemaId=" + cinemaId + "&Success";
+        return "redirect:/cinemas/seats?cinemaId=" + cinemaId + "&success";
 
     }
 }

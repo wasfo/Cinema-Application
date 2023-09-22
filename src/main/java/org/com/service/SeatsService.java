@@ -5,25 +5,32 @@ import org.com.dto.SeatDto;
 import org.com.entity.Cinema;
 import org.com.entity.Seat;
 import org.com.entity.User;
-import org.com.exceptions.CinemaNotFoundException;
 import org.com.exceptions.SeatAlreadyReservedException;
+import org.com.exceptions.SeatNotFoundException;
 import org.com.repository.SeatRepository;
+import org.com.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 public class SeatsService {
 
     private final SeatRepository seatRepository;
+    private final TicketRepository ticketRepository;
     private CinemaService cinemaService;
 
     @Autowired
-    public SeatsService(SeatRepository seatRepository, CinemaService cinemaService) {
+    public SeatsService(SeatRepository seatRepository,
+                        TicketRepository ticketRepository,
+                        CinemaService cinemaService) {
+
         this.seatRepository = seatRepository;
+        this.ticketRepository = ticketRepository;
+
         this.cinemaService = cinemaService;
     }
 
@@ -45,8 +52,8 @@ public class SeatsService {
         for (int i = 0; i < 64; i++) {
             if (excluded[i] == 0) {
                 SeatDto seatDto = (i <= 8)
-                        ? new SeatDto(i, Seat.seatType.PREMIUM)
-                        : new SeatDto(i, Seat.seatType.CLASSIC);
+                        ? new SeatDto(i, Seat.SeatType.PREMIUM)
+                        : new SeatDto(i, Seat.SeatType.CLASSIC);
                 seatDto.setReserved(false);
                 availableSeats.add(seatDto);
             }
@@ -68,6 +75,15 @@ public class SeatsService {
             throw new SeatAlreadyReservedException("this seat has been already reserved.");
         }
 
+    }
+
+    public void deleteSeat(long seatId) throws SeatNotFoundException {
+        Optional<Seat> seat = seatRepository.findById(seatId);
+        if (seat.isPresent()) {
+            seatRepository.deleteById(seat.get().getId());
+        } else {
+            throw new SeatNotFoundException("Seat with ID " + seatId + " not found");
+        }
     }
 
     public SeatDto mapSeatToDto(Seat seat) {

@@ -7,6 +7,7 @@ import org.com.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,9 +24,21 @@ public class TicketService {
         this.ticketRepository = ticketRepository;
     }
 
+    public List<Ticket> findAllTickets() {
+        return ticketRepository.findAll();
+    }
+
     public void createTicket(Cinema cinema, User user, Seat seat) throws TicketException {
         try {
-            Ticket ticket = new Ticket(cinema, user, seat, cinema.getRoom());
+            float ticketPrice = cinema.getPrice() + seat.getSeatPrice();
+            Ticket ticket = new Ticket(cinema.getMovie().getName(),
+                    user.getEmail(),
+                    seat.getSeatNumber(),
+                    cinema.getRoom().getName(),
+                    cinema.getShowdate(),
+                    cinema.getShowtime(),
+                    ticketPrice);
+
             saveTicket(ticket);
         } catch (Exception e) {
             throw new TicketException("one or more entities were not found");

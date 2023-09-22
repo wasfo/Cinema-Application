@@ -11,12 +11,12 @@ import org.com.entity.Seat;
 @Setter
 @NoArgsConstructor
 public class SeatDto {
-    private Seat.seatType seatType;
+    private Seat.SeatType seatType;
     private int seatNumber;
     private boolean isReserved;
     private long cinemaId;
 
-    public SeatDto(int seatNumber, Seat.seatType seatType) {
+    public SeatDto(int seatNumber, Seat.SeatType seatType) {
         this.seatType = seatType;
         this.seatNumber = seatNumber;
     }

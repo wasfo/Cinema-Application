@@ -1,7 +1,6 @@
 package org.com.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,26 +16,38 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "cinema_id")
-    private Cinema cinema;
+    @Column
+    private String movieName;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column
+    private String username;
 
-    @ManyToOne
-    @JoinColumn(name = "seat_id")
-    private Seat seat;
+    @Column
+    private int seatNumber;
 
-    @ManyToOne
-    @JoinColumn(name = "room_id")
-    private Room room;
+    @Column
+    private String roomName;
 
-    public Ticket(Cinema cinema, User user, Seat seat, Room room) {
-        this.cinema = cinema;
-        this.user = user;
-        this.seat = seat;
-        this.room = room;
+    @Column
+    private String showDate;
+
+    @Column
+    private String showTime;
+
+    @Column
+    private float price;
+
+    public Ticket(String movieName,
+                  String username, int seatNumber,
+                  String roomName, String showDate,
+                  String showTime, float price) {
+
+        this.movieName = movieName;
+        this.username = username;
+        this.seatNumber = seatNumber;
+        this.roomName = roomName;
+        this.showDate = showDate;
+        this.showTime = showTime;
+        this.price = price;
     }
 }

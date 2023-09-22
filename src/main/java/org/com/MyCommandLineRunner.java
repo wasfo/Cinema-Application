@@ -49,6 +49,8 @@ public class MyCommandLineRunner implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) throws Exception {
+//        createUsers();
+//        createCinemas();
     }
 
     public void createUsers() {

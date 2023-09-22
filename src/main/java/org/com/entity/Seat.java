@@ -5,8 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import static org.com.entity.Seat.seatType.CLASSIC;
-import static org.com.entity.Seat.seatType.PREMIUM;
+import static org.com.entity.Seat.SeatType.CLASSIC;
+import static org.com.entity.Seat.SeatType.PREMIUM;
 
 @Entity
 @Getter
@@ -17,7 +17,7 @@ import static org.com.entity.Seat.seatType.PREMIUM;
 )
 @NoArgsConstructor
 public class Seat {
-    public enum seatType {
+    public enum SeatType {
         CLASSIC,
         PREMIUM
     }
@@ -29,7 +29,7 @@ public class Seat {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
-    private seatType seatType;
+    private SeatType seatType;
 
     @Column(name = "number")
     private int seatNumber;
@@ -51,4 +51,12 @@ public class Seat {
         this.cinema = cinema;
         this.user = user;
     }
+
+    public int getSeatPrice() {
+        if (seatType == PREMIUM)
+            return 20;
+        else
+            return 10;
+    }
+
 }

@@ -1,5 +1,6 @@
  body {
     background-image: url('/images/troll.jpg');
+    font-family: Arial, sans-serif;
     background-size: cover; /* Adjust as needed */
     background-repeat: no-repeat;
     }

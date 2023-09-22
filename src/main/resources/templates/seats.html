@@ -81,7 +81,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li id="custom-item" class="nav-item">
-                    <form action="#" th:action="@{/register}" method="post" class="register-btn">
+                    <form action="#" th:action="@{/register}" method="get" class="register-btn">
                         <button type="submit" class="btn btn-success">Register</button>
                     </form>
                 </li>
@@ -105,11 +105,12 @@
 <br>
 <br>
 <div class="container text-center">
-    <div th:if="${errorMessage}" class="alert alert-danger">
+
+    <div th:if="${param.error}" class="alert alert-danger">
         <p th:text="${errorMessage}"></p>
     </div>
 
-    <div th:if="${param.Success}">
+    <div th:if="${param.success}">
         <div class="alert alert-info">You've successfully Reserved your Seat!</div>
     </div>
 
@@ -150,8 +151,6 @@
     <div class="movie-catalog-text">
         <h2> Seats </h2>
     </div>
-
-
 
     <div class="seat-container">
         <div th:each="seat: ${seats}" class="seat-icon"

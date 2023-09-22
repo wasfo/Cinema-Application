@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ticket Statistics</title>
+
+    <!-- Include Bootstrap CSS (you may need to adjust the path) -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Custom CSS for table styling -->
+    <link rel="stylesheet" th:href="@{/styles/statistics.css} ">
+</head>
+<body>
+<div class="container">
+    <h1>Ticket Statistics</h1>
+
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th>Movie</th>
+            <th>Total Tickets Sold</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="stat : ${stats}">
+            <td th:text="${stat.movieName}"></td>
+            <td th:text="${stat.totalTicketsSold}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Total income section -->
+    <div class="total-income">
+        Total Income: <h4 th:text="${totalIncome}"></h4>
+    </div>
+
+</div>
+</body>
+</html>
