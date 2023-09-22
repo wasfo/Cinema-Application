@@ -1,0 +1,21 @@
+    body {
+    background-image: url('/images/dark2.jpg');
+    }
+    .card {
+        width: 350px; /* Adjust the width as desired */
+        height: 350px; /* Adjust the height as desired */
+        margin: 10px; /* Add margin to create space between cards */
+        border-radius: 10px;
+        box-shadow: 3 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Custom image styling */
+    .card-img-top {
+        max-height: 190px; /* Adjust the maximum height of the image */    }
+    /* Custom button styling */
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+

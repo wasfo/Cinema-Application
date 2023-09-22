@@ -13,9 +13,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(SeatAlreadyReservedException.class)
     public String handleSeatAlreadyReservedException(SeatAlreadyReservedException ex,
                                                      RedirectAttributes redirectAttributes) {
+        Long cinemaId = (Long) redirectAttributes.getAttribute("cinemaId");
         redirectAttributes.addFlashAttribute("errorMessage",
-                "This seat is already reserved.");
-        return "redirect:/seats";
+                "This seat is already purchased.");
+        return "redirect:/cinemas/seats?cinemaId=" + cinemaId;
     }
 
     @ExceptionHandler(CinemaNotFoundException.class)

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Manager</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<link rel="stylesheet" th:href="@{/styles/admin.css} ">
+<body>
+
+
+<div class="container mt-5">
+    <h1 class="text-center">Admin Manager</h1>
+    <div class="row mt-4">
+        <!-- Card 1 -->
+
+        <div class="card">
+            <img src="/images/stats.png" class="card-img-top" alt="Image 1">
+            <div class="card-body">
+                <h5 class="card-title">Statistics</h5>
+                <p class="card-text">see statistics and reports</p>
+                <a th:href="@{/admin/stats}" class="btn btn-primary">See more</a>
+            </div>
+        </div>
+
+
+        <!-- Card 2 -->
+        <div class="card">
+            <img src="/images/movie.jpg" class="card-img-top" alt="Image 2">
+            <div class="card-body">
+                <h5 class="card-title">Movies</h5>
+                <p class="card-text">create more movies.</p>
+                <a th:href="@{/admin/movies/create}" class="btn btn-primary">See more</a>
+            </div>
+        </div>
+
+
+        <!-- Card 3 -->
+
+        <div class="card">
+            <img src="/images/LoL.jpg" class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title">Cinemas</h5>
+                <p class="card-text">create more cinemas.</p>
+                <a th:href="@{/admin/cinema/create}" class="btn btn-primary">See more</a>
+            </div>
+        </div>
+
+        <!-- Card 4 -->
+
+        <div class="card">
+            <img src="/images/users.png" class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">see users registered and tickets.</p>
+                <a th:href="@{/admin/cinema/create}" class="btn btn-primary">See more</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Include Bootstrap JS and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

@@ -45,28 +45,38 @@ public class CinemaController {
         return "cinemas";
     }
 
-    @GetMapping("/cinemas/{id}/seats")
-    public String getAllSeats(@PathVariable Long id, Model model) {
-        List<SeatDto> seats = seatsService.findAvailableSeats(id);
+    @GetMapping("/cinemas/seats")
+    public String getAllSeats(@RequestParam(value = "cinemaId") Long cinemaId, Model model) {
+
+
+        List<SeatDto> seats = seatsService.findAvailableSeats(cinemaId);
+
         model.addAttribute("seats", seats);
+        model.addAttribute("cinemaId", cinemaId);
         return "seats";
     }
 
-    @PostMapping("/cinemas/{cinemaId}/seats/reserve")
-    public String reserveSeat(@PathVariable Long cinemaId, @RequestParam int seatNumber)
+
+    @PostMapping("/cinemas/seats/reserve")
+    public String reserveSeat(
+            @RequestParam("cinemaId") Long cinemaId, @RequestParam("seatNumber") String seatNumber)
             throws SeatAlreadyReservedException, CinemaNotFoundException {
         String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
-        System.out.println("USER EMAIL ->" + userEmail);
+
+        if (userEmail.equals("anonymousUser")) {
+            return "redirect:/login";
+        }
+
         Cinema cinema = cinemaService.findById(cinemaId);
         Optional<User> user = userService.findByEmail(userEmail);
-        System.out.println("cinema  ->" + cinema);
-        System.out.println("found user ->" + user.get());
-        seatsService.reserveSeat(cinema, user.get(), seatNumber);
 
-        Seat seat = seatsService.findBySeatNumber(seatNumber);
+
+        seatsService.reserveSeat(cinema, user.get(), Integer.parseInt(seatNumber));
+
+        Seat seat = seatsService.findBySeatNumber(Integer.parseInt(seatNumber));
 
         ticketService.createTicket(cinema, user.get(), seat);
-        return "redirect:/cinemas/" + cinemaId + "/seats?Success";
+        return "redirect:/cinemas/seats?cinemaId=" + cinemaId + "&Success";
 
     }
 }

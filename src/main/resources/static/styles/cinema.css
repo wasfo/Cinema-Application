@@ -1,0 +1,70 @@
+ body {
+    background-image: url('/images/troll.jpg');
+    background-size: cover; /* Adjust as needed */
+    background-repeat: no-repeat;
+    }
+    .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logout-btn {
+        position: absolute;
+        top: 10px;
+        right: 50px;
+        font-size: 20px;
+        color: ##F0FFFF;
+    }
+    .register-btn {
+        position: absolute;
+        top: 10px;
+        right: 150px;
+        font-size: 20px;
+        color: ##F0FFFF;
+    }
+    .text-style {
+    font-style: Segoe UI;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #F0F8FF; /* Blue color */
+    }
+    .time{
+
+    font-style: italic;
+    text-decoration: underline;
+    }
+    .price{
+    font-weight: bold;
+    background-color: #fefbd8;
+    border: 1px solid #333;
+    border-radius: 5px;
+    padding: 5px 10px;
+    box-shadow: 3px 3px 5px #888888;
+    color: #dc3545;
+    }
+
+    .price:hover {
+    background-color: #ffdb58;
+    transform: scale(1.15);
+    cursor: pointer;
+    }
+
+    .movie-catalog {
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .movie-catalog-text h2 {
+        margin: 5px;
+        font-size: 32px; /* Larger Font Size */
+        font-family: 'Arial', sans-serif; /* Font Family */
+        text-align: center;
+        padding: 20px;
+        background-color: #2e3b4e; /* Deep Blue Background Color */
+        color: #ffffff; /* White Text Color */
+        border-radius: 10px; /* Rounded Corners */
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Subtle Box Shadow */
+    }
+
+

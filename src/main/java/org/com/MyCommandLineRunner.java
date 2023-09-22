@@ -72,7 +72,9 @@ public class MyCommandLineRunner implements CommandLineRunner {
         Movie shutter = new Movie("shutter Island", (short) 150, 8.5F);
         Movie Frozen = new Movie("Frozen", (short) 180, 8.2F);
         Room room = new Room("A", 64);
+        Room room2 = new Room("B", 64);
         roomRepository.save(room);
+        roomRepository.save(room2);
         movieRepository.save(avengers);
         movieRepository.save(shutter);
         movieRepository.save(Frozen);
@@ -85,7 +87,7 @@ public class MyCommandLineRunner implements CommandLineRunner {
         Cinema cinema2 = new Cinema(LocalTime.of(3, 0).toString(),
                 LocalDate.of(2023, 10, 2).toString(),
                 (short) 64,
-                15, room, shutter);
+                15, room2, shutter);
         Cinema cinema3 = new Cinema(LocalTime.of(2, 0).toString(),
                 LocalDate.of(2023, 10, 3).toString(),
                 (short) 64,

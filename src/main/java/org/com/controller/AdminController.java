@@ -21,7 +21,6 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminController {
 
-
     private final CinemaService cinemaService;
     private final MovieService movieService;
     private RoomService roomService;
@@ -39,7 +38,7 @@ public class AdminController {
     @GetMapping
     public String admin() {
         System.out.println("HERE!!!!!!!!!!!!!!!!! INSIDE ADMIN");
-        return "WELCOME ADMIN !!";
+        return "admin/admin_manager";
     }
 
     @GetMapping("/cinema/create")

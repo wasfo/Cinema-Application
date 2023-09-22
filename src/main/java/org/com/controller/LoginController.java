@@ -12,7 +12,7 @@ public class LoginController {
 
     @GetMapping("/login")
     public String loginForm() {
-        return "newlogin";
+        return "newLogin";
     }
 
     @GetMapping("/successLogin")
@@ -20,8 +20,7 @@ public class LoginController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication.getAuthorities().stream().anyMatch(grantedAuthority ->
                 grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {
-            // Redirect the admin user to /admin
-            return "redirect:/admin/cinema/create";
+            return "redirect:/admin";
         }
         return "redirect:/cinemas";
     }

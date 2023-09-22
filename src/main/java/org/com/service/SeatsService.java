@@ -61,7 +61,7 @@ public class SeatsService {
     public int reserveSeat(Cinema cinema, User user, int seatNumber) throws SeatAlreadyReservedException {
 
         try {
-            Seat seat = new Seat(seatNumber, cinema);
+            Seat seat = new Seat(seatNumber, cinema, user);
             seatRepository.save(seat);
             return seatNumber;
         } catch (Exception e) {

@@ -43,11 +43,12 @@ public class Seat {
     private User user;
 
 
-    public Seat(int seatNumber, Cinema cinema) {
+    public Seat(int seatNumber, Cinema cinema, User user) {
         this.seatNumber = seatNumber;
         if (seatNumber <= 8)
             this.seatType = PREMIUM;
         else this.seatType = CLASSIC;
         this.cinema = cinema;
+        this.user = user;
     }
 }

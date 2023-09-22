@@ -23,12 +23,13 @@ public class TicketService {
         this.ticketRepository = ticketRepository;
     }
 
-    public void createTicket(Cinema cinema, User user, Seat seat) {
-
-        Ticket ticket = new Ticket(cinema, user, seat, cinema.getRoom());
-        saveTicket(ticket);
-
-        throw new TicketException("one or more entities were not found");
+    public void createTicket(Cinema cinema, User user, Seat seat) throws TicketException {
+        try {
+            Ticket ticket = new Ticket(cinema, user, seat, cinema.getRoom());
+            saveTicket(ticket);
+        } catch (Exception e) {
+            throw new TicketException("one or more entities were not found");
+        }
 
 
     }
