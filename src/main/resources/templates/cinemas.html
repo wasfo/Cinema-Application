@@ -11,37 +11,16 @@
           crossorigin="anonymous">
 
     <link rel="stylesheet" th:href="@{/styles/cinema.css} ">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+    $.get("navbar.html", function(data){
+        $("#nav-placeholder").replaceWith(data);
+    });
+
+    </script>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Cinema Website</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-                <li id="custom-item" class="nav-item">
-                    <form action="#" th:action="@{/login}" method="get" class="register-btn">
-                        <button type="submit" class="btn btn-success">Register</button>
-                    </form>
-                </li>
-
-
-                <li class="nav-item">
-                    <div>
-                        <form action="#" th:action="@{/logout}" method="post" class="logout-btn">
-                            <button type="submit" class="btn btn-danger">Logout</button>
-                        </form>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
+<div id="nav-placeholder"></div>
 
 <div th:if="${param.success}" style="text-align: center; margin-top: 100px;">
     <div class="alert alert-info" style="display: flex;">You've successfully deleted the seats</div>
@@ -56,8 +35,6 @@
 <div th:if="${param.deleted}" style="text-align: center; margin-top: 100px;">
     <div class="alert alert-info" style="display: flex;">You've successfully deleted the cinema</div>
 </div>
-
-
 
 
 <div class="container text-center">

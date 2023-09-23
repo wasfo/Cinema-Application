@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Create Cinema</title>
@@ -7,6 +7,7 @@
           rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
           crossorigin="anonymous">
+
 </head>
 <style>
     body {
@@ -34,11 +35,20 @@
             justify-content: center;
         }
 
+
+
 </style>
 
 
 <body>
 
+<script>
+    $.get("/fragments/navbar.html", function(data){
+        $("#nav-placeholder").replaceWith(data);
+    });
+
+ </script>
+<div id="nav-placeholder"></div>
 <form th:object="${cinemaDto}" th:action="@{/admin/cinema/create}" method="post" class="form-horizontal">
     <h1>Create Cinema</h1>
     <div class="mb-3">
@@ -79,6 +89,13 @@
     <div class="center-button">
         <button type="submit" class="btn btn-secondary btn-lg">Create Cinema</button>
     </div>
+
+
+    <div>
+        <a th:href="@{/admin}" class="btn btn-primary">Back</a>
+    </div>
+
 </form>
+
 </body>
 </html>

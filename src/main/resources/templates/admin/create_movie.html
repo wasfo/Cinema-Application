@@ -7,6 +7,12 @@
           rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
           crossorigin="anonymous">
+    <script>
+    $.get("navbar.html", function(data){
+        $("#nav-placeholder").replaceWith(data);
+    });
+
+    </script>
 </head>
 <style>
     body {
@@ -39,7 +45,7 @@
 
 
 <body>
-
+<div id="nav-placeholder"></div>
 
 <form th:object="${movieDto}" th:action="@{/admin/movie/create}" method="post" enctype="multipart/form-data" class="form-horizontal">
 

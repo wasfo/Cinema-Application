@@ -9,8 +9,15 @@
 
     <!-- Custom CSS for table styling -->
     <link rel="stylesheet" th:href="@{/styles/statistics.css} ">
+    <script>
+    $.get("navbar.html", function(data){
+        $("#nav-placeholder").replaceWith(data);
+    });
+
+    </script>
 </head>
 <body>
+<div id="nav-placeholder"></div>
 <div class="container">
     <h1>Ticket Statistics</h1>
 

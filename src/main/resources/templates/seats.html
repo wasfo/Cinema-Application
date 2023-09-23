@@ -68,39 +68,17 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+    $.get("navbar.html", function(data){
+        $("#nav-placeholder").replaceWith(data);
+    });
+</script>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Cinema Website</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li id="custom-item" class="nav-item">
-                    <form action="#" th:action="@{/register}" method="get" class="register-btn">
-                        <button type="submit" class="btn btn-success">Register</button>
-                    </form>
-                </li>
-                <li class="nav-item">
-                    <div>
-                        <form action="#" th:action="@{/logout}" method="post" class="logout-btn">
-                            <button type="submit" class="btn btn-danger">Logout</button>
-                        </form>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
-
-<!-- Modal for seat reservation -->
-<!-- Button to Open the Modal -->
-
+<div id="nav-placeholder">
+</div>
 
 <br>
 <br>

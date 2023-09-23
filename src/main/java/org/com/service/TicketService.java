@@ -14,10 +14,7 @@ import java.util.Optional;
 public class TicketService {
 
     private TicketRepository ticketRepository;
-    private CinemaRepository cinemaRepository;
-    private UserRepository userRepository;
-    private SeatRepository seatRepository;
-    private RoomRepository roomRepository;
+
 
     @Autowired
     public TicketService(TicketRepository ticketRepository) {
