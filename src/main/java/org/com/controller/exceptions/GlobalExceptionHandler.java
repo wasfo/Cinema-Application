@@ -1,8 +1,10 @@
 package org.com.controller.exceptions;
 
 import org.com.exceptions.CinemaNotFoundException;
+import org.com.exceptions.CinemaStillHasReservedSeatsException;
 import org.com.exceptions.SeatAlreadyReservedException;
 import org.com.exceptions.SeatNotFoundException;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,6 +25,15 @@ public class GlobalExceptionHandler {
     public String handleCinemaNotFoundException(CinemaNotFoundException ex,
                                                 RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("errorMessage", ex.getMessage());
+        return "cinemas";
+    }
+
+
+    @ExceptionHandler(CinemaStillHasReservedSeatsException.class)
+    public String handleSeatsReservedException(CinemaStillHasReservedSeatsException ex,
+                                               RedirectAttributes redirectAttributes) {
+
+        redirectAttributes.addFlashAttribute("errorMessage", ex.getMessage());
         return "redirect:/cinemas";
     }
 
@@ -30,7 +41,7 @@ public class GlobalExceptionHandler {
     public String handleSeatNotFoundException(CinemaNotFoundException ex,
                                               RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("errorMessage", ex.getMessage());
-        return "redirect:/cinemas";
+        return "cinemas";
     }
 
 }

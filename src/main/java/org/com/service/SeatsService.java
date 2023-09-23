@@ -1,6 +1,7 @@
 package org.com.service;
 
 
+import jakarta.transaction.Transactional;
 import org.com.dto.SeatDto;
 import org.com.entity.Cinema;
 import org.com.entity.Seat;
@@ -59,6 +60,11 @@ public class SeatsService {
             }
         }
         return availableSeats;
+    }
+
+    @Transactional
+    public void deleteAllSeats(long cinemaId) {
+        seatRepository.deleteByCinemaId(cinemaId);
     }
 
     public Seat findBySeatNumber(int seatNum) {

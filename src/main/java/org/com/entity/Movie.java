@@ -27,6 +27,9 @@ public class Movie {
     @Column(name = "rating")
     private float rating;
 
+    @Column(name = "imageName")
+    private String imageName;
+
     @OneToMany(mappedBy = "movie", fetch = FetchType.EAGER)
     private List<Cinema> cinemas;
 

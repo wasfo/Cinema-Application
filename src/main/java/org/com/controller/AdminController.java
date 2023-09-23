@@ -2,17 +2,18 @@ package org.com.controller;
 
 
 import org.com.dto.CinemaDto;
+import org.com.dto.MovieDto;
 import org.com.dto.TicketStatisticDto;
 import org.com.entity.Movie;
 import org.com.entity.Room;
-import org.com.service.CinemaService;
-import org.com.service.MovieService;
-import org.com.service.RoomService;
-import org.com.service.StatisticsService;
+import org.com.exceptions.CinemaStillHasReservedSeatsException;
+import org.com.exceptions.MovieDuplicateException;
+import org.com.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ import java.util.List;
 public class AdminController {
 
     private final CinemaService cinemaService;
+    private final SeatsService seatsService;
     private final MovieService movieService;
     private final StatisticsService statisticsService;
     private final RoomService roomService;
@@ -28,9 +30,10 @@ public class AdminController {
 
     @Autowired
     public AdminController(CinemaService cinemaService,
-                           MovieService movieService,
+                           SeatsService seatsService, MovieService movieService,
                            StatisticsService statisticsService, RoomService roomService) {
         this.cinemaService = cinemaService;
+        this.seatsService = seatsService;
         this.movieService = movieService;
         this.statisticsService = statisticsService;
         this.roomService = roomService;
@@ -52,7 +55,7 @@ public class AdminController {
         List<Room> roomList = roomService.findAllRooms();
         model.addAttribute("rooms", roomList);
 
-        return "admin/createcinema";
+        return "admin/create_cinema";
     }
 
     @PostMapping("/cinema/create")
@@ -68,15 +71,33 @@ public class AdminController {
         return "redirect:/cinemas";
     }
 
-    @DeleteMapping("/seats/deleteAll")
-    public String deleteSeats(@PathVariable long cinemaId) {
-
-        return "redirect:/cinemas";
+    @GetMapping("/movie/create")
+    public String showCreateMovieForm(Model model) {
+        model.addAttribute("movieDto", new MovieDto());
+        return "admin/create_movie";
     }
 
-    @DeleteMapping("/cinema/delete/{cinemaId}")
-    public String deleteCinema(@PathVariable long cinemaId) {
-        return "redirect:/cinemas";
+    @PostMapping(value = "/movie/create")
+    public String createMovie(@ModelAttribute MovieDto movieDto,
+                              @RequestParam("file") MultipartFile image) throws MovieDuplicateException {
+        String ImageName = image.getOriginalFilename();
+        movieService.saveImage(image);
+        movieService.createMovie(movieDto, ImageName);
+        return "redirect:/admin/movie/create?success";
+    }
+
+    @PostMapping("/seats/deleteAll")
+    public String deleteSeats(@RequestParam("cinemaId") long cinemaId) {
+        seatsService.deleteAllSeats(cinemaId);
+        return "redirect:/cinemas?success";
+    }
+
+    @PostMapping("/cinema/delete")
+    public String deleteCinema(@RequestParam("cinemaId") long cinemaId)
+            throws CinemaStillHasReservedSeatsException {
+        System.out.println("CINMA IDEEEEEEEE -> " + cinemaId);
+        cinemaService.deleteCinemaById(cinemaId);
+        return "redirect:/cinemas?deleted";
     }
 
     @GetMapping("/cinema/stats")

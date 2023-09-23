@@ -31,9 +31,10 @@
 
     <!-- Total income section -->
     <div class="total-income">
-        Total Income: <h4 th:text="${totalIncome}"></h4>
+        Total Income: <a th:text="${totalIncome}"> $</a>
     </div>
 
+    <a th:href="@{/admin}" class="btn btn-primary">Back</a>
 </div>
 </body>
 </html>

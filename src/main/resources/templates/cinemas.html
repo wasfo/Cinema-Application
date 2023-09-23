@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Registration and Login System</title>
@@ -9,7 +10,7 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
           crossorigin="anonymous">
 
-    <link rel="stylesheet" th:href="@{/styles/cinema.css} " >
+    <link rel="stylesheet" th:href="@{/styles/cinema.css} ">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -42,7 +43,26 @@
 </nav>
 
 
+<div th:if="${param.success}" style="text-align: center; margin-top: 100px;">
+    <div class="alert alert-info" style="display: flex;">You've successfully deleted the seats</div>
+</div>
+
+
+<div th:if="${errorMessage}" class="alert alert-danger" style="text-align: center; margin-top: 100px;">
+    <p th:text="${errorMessage}"></p>
+</div>
+
+
+<div th:if="${param.deleted}" style="text-align: center; margin-top: 100px;">
+    <div class="alert alert-info" style="display: flex;">You've successfully deleted the cinema</div>
+</div>
+
+
+
+
 <div class="container text-center">
+
+
     <div class="movie-catalog-text">
         <h2> Movies Catalogue </h2>
     </div>
@@ -69,16 +89,33 @@
                 <td colspan="2">
                     <span th:text="${cinema.price} +'$'" class="price"></span>
                     <form th:action="@{/cinemas/seats}" method="get">
-<!--                        <input type="hidden" name="cinemaId" th:value="${cinema.id}"/>-->
+                        <!--                        <input type="hidden" name="cinemaId" th:value="${cinema.id}"/>-->
                         <button type="submit" name="cinemaId" th:value="${cinema.id}" class="btn btn-primary">Buy
                             Ticket
                         </button>
                     </form>
                 </td>
+                <div sec:authorize="hasRole('ADMIN')">
+                    <td colspan="2">
+                        <form th:action="@{/admin/seats/deleteAll}" method="post">
+                            <button name="cinemaId"
+                                    th:value="${cinema.id}" class="btn btn-danger">Delete All Seats
+                            </button>
+                        </form>
+                    <td colspan="2">
+                        <form th:action="@{/admin/cinema/delete}" method="post">
+                            <button name="cinemaId"
+                                    th:value="${cinema.id}" class="btn btn-danger">Delete This Cinema
+                            </button>
+                        </form>
+                    </td>
+                </div>
+
             </tr>
             </tbody>
         </table>
     </div>
 </div>
+
 </body>
 </html>

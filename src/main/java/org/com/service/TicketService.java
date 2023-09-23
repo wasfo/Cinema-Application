@@ -32,12 +32,7 @@ public class TicketService {
         try {
             float ticketPrice = cinema.getPrice() + seat.getSeatPrice();
             Ticket ticket = new Ticket(cinema.getMovie().getName(),
-                    user.getEmail(),
-                    seat.getSeatNumber(),
-                    cinema.getRoom().getName(),
-                    cinema.getShowdate(),
-                    cinema.getShowtime(),
-                    ticketPrice);
+                    user.getEmail(), cinema, ticketPrice);
 
             saveTicket(ticket);
         } catch (Exception e) {

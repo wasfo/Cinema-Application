@@ -28,12 +28,10 @@ public class StatisticsService {
         List<Object[]> results = query.getResultList();
 
         List<TicketStatisticDto> ticketStatistics = new ArrayList<>();
-        double totalIncome = 0;
         for (Object[] result : results) {
             String movieName = (String) result[0];
             Double totalTicketPrice = (Double) result[1];
 
-            totalIncome += totalTicketPrice;
 
             TicketStatisticDto statistic = new TicketStatisticDto();
             statistic.setMovieName(movieName);

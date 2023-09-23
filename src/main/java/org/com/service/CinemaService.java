@@ -2,17 +2,14 @@ package org.com.service;
 
 
 import org.com.dto.CinemaDto;
-import org.com.dto.UserDto;
 import org.com.entity.Cinema;
-import org.com.entity.User;
 import org.com.exceptions.CinemaNotFoundException;
+import org.com.exceptions.CinemaStillHasReservedSeatsException;
 import org.com.repository.CinemaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.nio.file.AccessMode;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,6 +34,16 @@ public class CinemaService {
         Cinema cinema = cinemaRepository
                 .findById(cinemaId).orElseThrow(() -> new CinemaNotFoundException("Cinema not found"));
         return cinema;
+    }
+
+    public void deleteCinemaById(long cinemaId) {
+        try {
+            cinemaRepository.deleteById(cinemaId);
+        } catch (Exception e) {
+            System.out.println("EXCEPTION ->" + e.getMessage());
+            throw new CinemaStillHasReservedSeatsException("Cinema still has seats reserved. delete seats first");
+        }
+
     }
 
     private CinemaDto convertToDto(Cinema cinema) {

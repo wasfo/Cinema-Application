@@ -1,6 +1,7 @@
 package org.com.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,32 +23,17 @@ public class Ticket {
     @Column
     private String username;
 
-    @Column
-    private int seatNumber;
-
-    @Column
-    private String roomName;
-
-    @Column
-    private String showDate;
-
-    @Column
-    private String showTime;
+    @ManyToOne
+    @JoinColumn(name = "cinema_id")
+    private Cinema cinema;
 
     @Column
     private float price;
 
-    public Ticket(String movieName,
-                  String username, int seatNumber,
-                  String roomName, String showDate,
-                  String showTime, float price) {
-
+    public Ticket(String movieName, String username, Cinema cinema, float price) {
         this.movieName = movieName;
         this.username = username;
-        this.seatNumber = seatNumber;
-        this.roomName = roomName;
-        this.showDate = showDate;
-        this.showTime = showTime;
+        this.cinema = cinema;
         this.price = price;
     }
 }

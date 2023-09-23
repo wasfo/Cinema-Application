@@ -46,6 +46,9 @@ public class Cinema {
     @JoinColumn(name = "movie_id")
     private Movie movie;
 
+    @OneToMany(mappedBy = "cinema", cascade = CascadeType.ALL)
+    private List<Ticket> tickets;
+
 
     public Cinema(String showtime, String showdate,
                   short availableseats,

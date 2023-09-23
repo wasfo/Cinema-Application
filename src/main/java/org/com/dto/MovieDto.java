@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
 
 @Getter
 @Setter
@@ -13,8 +16,9 @@ import lombok.Setter;
 public class MovieDto {
     private Long id;
     private String name;
-    private short durationInMinutes;
+    private float durationInMinutes;
     private float rating;
+    private String image;
 
     @Override
     public String toString() {

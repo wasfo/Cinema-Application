@@ -13,4 +13,6 @@ public interface SeatRepository extends JpaRepository<Seat, Long> {
 
     public Seat findBySeatNumber(int seatNum);
 
+    public void deleteByCinemaId(long cinemaId);
+
 }
