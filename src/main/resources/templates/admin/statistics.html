@@ -1,23 +1,18 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Ticket Statistics</title>
 
-    <!-- Include Bootstrap CSS (you may need to adjust the path) -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-    <!-- Custom CSS for table styling -->
     <link rel="stylesheet" th:href="@{/styles/statistics.css} ">
-    <script>
-    $.get("navbar.html", function(data){
-        $("#nav-placeholder").replaceWith(data);
-    });
 
-    </script>
 </head>
 <body>
-<div id="nav-placeholder"></div>
+
+<div th:insert="~{navbar :: navbar}">  </div>
+
 <div class="container">
     <h1>Ticket Statistics</h1>
 

@@ -11,16 +11,10 @@
           crossorigin="anonymous">
 
     <link rel="stylesheet" th:href="@{/styles/cinema.css} ">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-    $.get("navbar.html", function(data){
-        $("#nav-placeholder").replaceWith(data);
-    });
-
-    </script>
 </head>
+
 <body>
-<div id="nav-placeholder"></div>
+<div th:insert="~{navbar :: navbar}">  </div>
 
 <div th:if="${param.success}" style="text-align: center; margin-top: 100px;">
     <div class="alert alert-info" style="display: flex;">You've successfully deleted the seats</div>

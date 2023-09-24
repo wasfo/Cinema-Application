@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Registration and Login System</title>
@@ -11,55 +12,72 @@
 
     <style>
 
+
+    .container {
+        display: flex; /* Use flexbox to arrange components in a row */
+            justify-content: space-between; /* Add space between components */
+            align-items: center; /* Center-align components vertically */
+            padding: 15px; /* Add padding to the container */
+    }
+    .container-box {
+        background-color: #f2f2f2;
+        padding: 20px;
+        text-align: center;
+    }
+    .component {
+            margin: 10px;
+    }
+
+    .movie-card {
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            font-family: Arial, sans-serif;
+
+        }
+
+        .movie-title {
+            font-size: 25px; /* Set the font size for the title */
+            font-weight: bold; /* Make the title bold */
+            margin-bottom: 12px; /* Add spacing below the title */
+        }
+
+        .movie-details {
+            font-size: 16px;
+
+        }
     .seat-container {
-    background-color: #f1f1f1;
+     display: flex;
     padding: 10px;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    }
-   .seat-icon {
-    /* Define the size and shape of the seat icon */
-    width: 60px;
-    height: 60px;
-    border: 3px solid #333;
-    border-radius: 60%;
-    display: inline-block;
-    margin: 5px;
-    text-align: center;
-    vertical-align: middle;
-    line-height: 40px;
-    cursor: pointer;
-    }
-    .seat-icon:hover {
-    background-color: #ffdb58;
-    transform: scale(1.6);
-    cursor: pointer;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr); /* Create 8 columns */
+    gap: 10px; /* Add spacing between seats */
     }
 
-    .seat-number {
-    /* Style for the seat number inside the icon */
-    font-size: 18px;
-    font-weight: bold;
+        /* Style the seat icon */
+    .seat-icon {
+        width: 50px; /* Set the width of the seat icon */
+        height: 50px; /* Set the height of the seat icon */
+        background-color: #90EE90; /* Set the background color */
+        color: #FFFFFF; /* Set the text color */
+        border-radius: 50%; /* Make it round */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px; /* Set the font size for the seat number */
+        font-weight: bold; /* Make the seat number bold */
     }
 
-    /* Style for different seat types */
-    .premium-seat {
-    background-color: #ffc107;
-    }
-
-    .classic-seat {
-    background-color: #007bff;
-    color: white;
-    }
-    .reserved {
-    background-color: #808080;
-    border-color: #808080;
-    pointer-events: none;
-    }
-
-
-
+        .reserved {
+            background-color: #FF0000; /* Change the background color for reserved seats */
+        }
 
     </style>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
@@ -68,18 +86,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-    $.get("navbar.html", function(data){
-        $("#nav-placeholder").replaceWith(data);
-    });
-</script>
+
 </head>
 <body>
-
-<div id="nav-placeholder">
-</div>
-
+<div th:insert="~{navbar :: navbar}">  </div>
 <br>
 <br>
 <div class="container text-center">
@@ -92,9 +102,6 @@
         <div class="alert alert-info">You've successfully Reserved your Seat!</div>
     </div>
 
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#reservationModal">
-        Reserve a Seat
-    </button>
 
     <!-- Reservation Modal -->
     <div class="modal fade" id="reservationModal" tabindex="-1" role="dialog" aria-labelledby="reservationModalLabel" aria-hidden="true">
@@ -125,19 +132,34 @@
     </div>
 
 
+    <div class="container">
 
-    <div class="movie-catalog-text">
-        <h2> Seats </h2>
-    </div>
+        <div class="movie-card component">
+            <h2 class="movie-title">Movie Title</h2>
+            <p class="movie-details">Director: John Doe</p>
+            <p class="movie-details">Genre: Action</p>
+            <p class="movie-details">Release Date: 2023-09-30</p>
+            <p class="movie-details">Rating: 8.5</p>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#reservationModal">
+                Reserve a Seat
+            </button>
+        </div>
 
-    <div class="seat-container">
-        <div th:each="seat: ${seats}" class="seat-icon"
-             th:classappend="${seat.isReserved} ? 'reserved' : ''">
-            <div class="seat-content">
-                <span th:text="${seat.seatNumber}" class="seat-number"></span>
+        <div class="component container-box">
+            <h2> Seats </h2>
+
+            <div class="seat-container">
+                <div th:each="seat: ${seats}" class="seat-icon"
+                     th:classappend="${seat.isReserved} ? 'reserved' : ''">
+                    <div class="seat-content">
+                        <span th:text="${seat.seatNumber}" class="seat-number"></span>
+                    </div>
+                </div>
             </div>
         </div>
+
     </div>
+
 </div>
 
 </body>

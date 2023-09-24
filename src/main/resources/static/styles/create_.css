@@ -1,0 +1,54 @@
+body {
+        background-image: url('/images/dark.jpg');
+        font-family: Arial, sans-serif;
+        background-size: cover; /* Adjust as needed */
+        background-repeat: no-repeat;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        }
+
+        /* Style the form container */
+        .form-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: calc(100vh - 40px); /* Subtract navbar height */
+        }
+        .form-title {
+            font-size: 20px; /* Set the desired font size for the title */
+            margin-bottom: 10px; /* Add margin to separate the title from the form */
+        }
+        form {
+        background-image: url('/images/dark2.jpg');
+        text-align: left;
+        padding: 20px;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+        width: 80%;
+        height: 150%;
+        max-width: 400px;
+        }
+
+        label {
+            color: #F0F8FF;
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        button {
+            color: #F0F8FF;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: F0F8FF;
+            color: #fff;
+            cursor: pointer;
+        }
