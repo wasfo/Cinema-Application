@@ -49,7 +49,7 @@ public class CinemaController {
     public String getAllSeats(@RequestParam(value = "cinemaId") Long cinemaId, Model model) {
 
 
-        List<SeatDto> seats = seatsService.findAvailableSeats(cinemaId);
+        List<SeatDto> seats = seatsService.findAllSeats(cinemaId);
 
         model.addAttribute("seats", seats);
         model.addAttribute("cinemaId", cinemaId);

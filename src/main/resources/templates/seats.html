@@ -20,6 +20,8 @@
             padding: 15px; /* Add padding to the container */
     }
     .container-box {
+        border: 1px solid #ccc;
+            border-radius: 5px;
         background-color: #f2f2f2;
         padding: 20px;
         text-align: center;
@@ -51,7 +53,7 @@
 
         }
     .seat-container {
-     display: flex;
+    +display: flex;
     padding: 10px;
     display: flex;
     justify-content: space-between;
@@ -63,20 +65,44 @@
 
         /* Style the seat icon */
     .seat-icon {
-        width: 50px; /* Set the width of the seat icon */
-        height: 50px; /* Set the height of the seat icon */
-        background-color: #90EE90; /* Set the background color */
-        color: #FFFFFF; /* Set the text color */
-        border-radius: 50%; /* Make it round */
+        width: 50px;
+        height: 50px;
+        background-color: #90EE90;
+        color: #FFFFFF;
+        border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 16px; /* Set the font size for the seat number */
-        font-weight: bold; /* Make the seat number bold */
+        font-size: 16px;
+        font-weight: bold;
     }
 
-        .reserved {
-            background-color: #FF0000; /* Change the background color for reserved seats */
+    .reserved {
+        background-color: #FF0000; /* Change the background color for reserved seats */
+    }
+    .gold {
+    background-color:#FFD700
+    }
+
+    .info-box {
+            background-color: #f0f0f0;
+            padding: 0px;
+            text-align: <left></left>;
+        }
+
+        .color-green {
+            width: 40px;
+            height: 20px;
+            background-color: #90EE90;
+            display: inline-block;
+            margin-right: 5px;
+        }
+        .color-gold{
+            width: 40px;
+            height: 20px;
+            background-color: #FFD700;
+            display: inline-block;
+            margin-right: 5px;
         }
 
     </style>
@@ -147,15 +173,25 @@
 
         <div class="component container-box">
             <h2> Seats </h2>
+            <div class="info-box">
+                <p><span class="color-green"></span> Classic seats </p>
+                <p><span class="color-gold"></span> Premium seats</p>
+            </div>
+
 
             <div class="seat-container">
-                <div th:each="seat: ${seats}" class="seat-icon"
-                     th:classappend="${seat.isReserved} ? 'reserved' : ''">
-                    <div class="seat-content">
-                        <span th:text="${seat.seatNumber}" class="seat-number"></span>
-                    </div>
+                <!-- Use Thymeleaf to loop through your list of seats -->
+                <div th:each="seat, status: ${seats}" class="seat-icon"
+                     th:classappend="${status.index < 8} ? 'gold' : ''">
+                <div class="seat-content">
+
+                    <span th:text="${seat.isReserved} ? 'RESERVED' : ${seat.seatNumber}" class="seat-number"></span>
                 </div>
             </div>
+
+        </div>
+
+
         </div>
 
     </div>
