@@ -46,7 +46,8 @@ public class CinemaController {
     }
 
     @GetMapping("/cinemas/seats")
-    public String getAllSeats(@RequestParam(value = "cinemaId") Long cinemaId, Model model) {
+    public String getAllSeats(@RequestParam(value = "cinemaId") Long cinemaId,
+                              Model model) throws CinemaNotFoundException {
 
 
         List<SeatDto> seats = seatsService.findAllSeats(cinemaId);

@@ -49,6 +49,9 @@ public class MyCommandLineRunner implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) throws Exception {
+        List<Ticket> tickets = ticketRepository.findTicketByUsername("sara");
+        System.out.println("FOUDN TICKET ->");
+        System.out.println(tickets);
 //        createUsers();
 //        createCinemas();
     }

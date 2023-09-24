@@ -6,6 +6,7 @@ import org.com.dto.SeatDto;
 import org.com.entity.Cinema;
 import org.com.entity.Seat;
 import org.com.entity.User;
+import org.com.exceptions.CinemaNotFoundException;
 import org.com.exceptions.SeatAlreadyReservedException;
 import org.com.exceptions.SeatNotFoundException;
 import org.com.repository.SeatRepository;
@@ -13,9 +14,11 @@ import org.com.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 @Service
 public class SeatsService {
@@ -31,28 +34,36 @@ public class SeatsService {
 
         this.seatRepository = seatRepository;
         this.ticketRepository = ticketRepository;
-
         this.cinemaService = cinemaService;
     }
 
-    public List<SeatDto> findAllSeats(Long cinemaId) {
+    public List<SeatDto> findAllSeats(Long cinemaId) throws CinemaNotFoundException {
         List<Seat> reservedSeats = seatRepository.findByCinemaId(cinemaId);
-        List<SeatDto> seatDtos = reservedSeats
+        List<Integer> seatNumbers = new ArrayList<>(reservedSeats
                 .stream()
-                .map(this::mapSeatToDto)
-                .toList();
+                .map(Seat::getSeatNumber)
+                .toList());
 
-        List<SeatDto> availableSeats = new ArrayList<>();
-        for (int i = 0; i < 64; i++) {
-            if (seatDtos.get(i) == 0) {
-                SeatDto seatDto = (i <= 8)
-                        ? new SeatDto(i, Seat.SeatType.PREMIUM)
-                        : new SeatDto(i, Seat.SeatType.CLASSIC);
-                seatDto.setReserved(false);
-                availableSeats.add(seatDto);
+        seatNumbers.sort(((o1, o2) -> o1 - o2));
+        Queue<Integer> queue = new LinkedList<>(seatNumbers);
+
+        Cinema cinema = cinemaService.findById(cinemaId);
+        int numberOfSeats = cinema.getRoom().getNumberOfSeats();
+
+        List<SeatDto> allseats = new ArrayList<>();
+        for (int i = 1; i <= numberOfSeats; i++) {
+            SeatDto seat = new SeatDto(i );
+            if (!queue.isEmpty() && queue.peek() == i) {
+                seat.setReserved(true);
+                queue.poll();
+            } else {
+                seat.setReserved(false);
             }
+            allseats.add(seat);
         }
-        return availableSeats;
+
+
+        return allseats;
     }
 
     @Transactional
@@ -91,5 +102,10 @@ public class SeatsService {
         seatDto.setCinemaId(seat.getCinema().getId());
         seatDto.setSeatType(seat.getSeatType());
         return seatDto;
+    }
+
+    public static void main(String[] args) {
+
+
     }
 }

@@ -36,4 +36,15 @@ public class Ticket {
         this.cinema = cinema;
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "id=" + id +
+                ", movieName='" + movieName + '\'' +
+                ", username='" + username + '\'' +
+                ", cinema=" + cinema +
+                ", price=" + price +
+                '}';
+    }
 }

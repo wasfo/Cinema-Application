@@ -16,8 +16,20 @@ public class SeatDto {
     private boolean isReserved;
     private long cinemaId;
 
-    public SeatDto(int seatNumber, Seat.SeatType seatType) {
-        this.seatType = seatType;
+    public SeatDto(int seatNumber) {
         this.seatNumber = seatNumber;
+        if (seatNumber <= 8)
+            this.seatType = Seat.SeatType.PREMIUM;
+        else this.seatType = Seat.SeatType.CLASSIC;
+
+    }
+
+    @Override
+    public String toString() {
+        return "SeatDto{" +
+                "seatType=" + seatType +
+                ", seatNumber=" + seatNumber +
+                ", isReserved=" + isReserved +
+                '}';
     }
 }

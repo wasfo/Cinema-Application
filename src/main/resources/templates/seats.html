@@ -27,18 +27,19 @@
         text-align: center;
     }
     .component {
-            margin: 10px;
+        margin: 10px;
     }
 
     .movie-card {
-            width: 300px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 20px;
-            margin: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            font-family: Arial, sans-serif;
+        width: 300px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 20px;
+        margin: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        font-family: Arial, sans-serif;
+        margin-bottom: 450px;
 
         }
 
@@ -87,23 +88,44 @@
     .info-box {
             background-color: #f0f0f0;
             padding: 0px;
-            text-align: <left></left>;
+            text-align: left;
         }
 
-        .color-green {
+        .green-box {
             width: 40px;
             height: 20px;
             background-color: #90EE90;
             display: inline-block;
             margin-right: 5px;
         }
-        .color-gold{
+        .gold-box{
             width: 40px;
             height: 20px;
             background-color: #FFD700;
             display: inline-block;
             margin-right: 5px;
         }
+        .red-box{
+            width: 40px;
+            height: 20px;
+            background-color: #B22222;
+            display: inline-block;
+            margin-right: 5px;
+        }
+        .reserved {
+        background-color: #FFFFFF;
+        background-color: #B22222;
+        width: 50px;
+        height: 50px;
+        color: #FFFFFF;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
 
     </style>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
@@ -115,7 +137,7 @@
 
 </head>
 <body>
-<div th:insert="~{navbar :: navbar}">  </div>
+<div th:insert="~{navbar :: navbar}"></div>
 <br>
 <br>
 <div class="container text-center">
@@ -130,7 +152,8 @@
 
 
     <!-- Reservation Modal -->
-    <div class="modal fade" id="reservationModal" tabindex="-1" role="dialog" aria-labelledby="reservationModalLabel" aria-hidden="true">
+    <div class="modal fade" id="reservationModal" tabindex="-1" role="dialog" aria-labelledby="reservationModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <form id="reservationForm" th:action="@{/cinemas/seats/reserve}" method="post">
@@ -174,22 +197,23 @@
         <div class="component container-box">
             <h2> Seats </h2>
             <div class="info-box">
-                <p><span class="color-green"></span> Classic seats </p>
-                <p><span class="color-gold"></span> Premium seats</p>
+                <p><span class="green-box"></span> Classic seats </p>
+                <p><span class="gold-box"></span> Premium seats</p>
+                <p><span class="red-box"></span> Reserved seats</p>
             </div>
-
 
             <div class="seat-container">
                 <!-- Use Thymeleaf to loop through your list of seats -->
                 <div th:each="seat, status: ${seats}" class="seat-icon"
                      th:classappend="${status.index < 8} ? 'gold' : ''">
-                <div class="seat-content">
+                    <div class="seat-content">
 
-                    <span th:text="${seat.isReserved} ? 'RESERVED' : ${seat.seatNumber}" class="seat-number"></span>
+                        <span th:classappend="${seat.isReserved} ? 'reserved' : ''" th:text="${seat.seatNumber}"
+                              class="seat-number"></span>
+                    </div>
                 </div>
-            </div>
 
-        </div>
+            </div>
 
 
         </div>

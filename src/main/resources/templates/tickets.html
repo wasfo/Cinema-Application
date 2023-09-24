@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration and Login System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+    <title>Tickets</title>
+</head>
+<style>
+    .container {
+
+            display: flex; /* Use flexbox to arrange components in a row */
+            justify-content: space-between; /* Add space between components */
+            align-items: center; /* Center-align components vertically */
+            padding: 5px; /* Add padding to the container */
+    }
+    .ticket-card {
+            background-color: #7FFFD4;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            font-family: Arial, sans-serif;
+            margin-bottom: 10px;
+
+
+        }
+           .ticket-box {
+
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 400px;
+            background-color: #f9f9f9;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Style for the title */
+        .box-title {
+
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+
+            text-align: center
+        }
+
+        /* Style for the card list */
+        .card-list {
+
+            list-style: none;
+            padding: 0;
+}
+    .ticket-details{
+
+        font-weight: bold;
+    }
+
+
+
+
+
+
+</style>
+<body>
+
+
+
+<div th:insert="~{navbar :: navbar}"></div>
+
+<br>
+<br>
+<div class=" ticket-box ">
+    <div class="box-title">My Tickets</div>
+    <ul th:each="ticket: ${tickets}" class="card-list">
+            <li class="ticket-card">
+                <p class="ticket-details" th:text="'movie name : ' + ${ticket.movieName}"></p>
+                <p th:text="'Date: ' + ${ticket.cinema.showdate}"></p>
+                <p th:text="'time: ' + ${ticket.cinema.showtime}"></p>
+                <p th:text="'ticket price: ' + ${ticket.price}"></p>
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#reservationModal">
+                    Refund Ticket
+                </button>
+            </li>
+    </ul>
+</div>
+</body>
+</html>

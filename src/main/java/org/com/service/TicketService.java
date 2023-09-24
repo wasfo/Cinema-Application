@@ -21,9 +21,14 @@ public class TicketService {
         this.ticketRepository = ticketRepository;
     }
 
-    public List<Ticket> findAllTickets() {
-        return ticketRepository.findAll();
+    public List<Ticket> findAllTicketsByUserName(String username) {
+        return ticketRepository.findTicketByUsername(username);
     }
+
+    public Optional<Ticket> findById(long id) {
+        return ticketRepository.findById(id);
+    }
+
 
     public void createTicket(Cinema cinema, User user, Seat seat) throws TicketException {
         try {
