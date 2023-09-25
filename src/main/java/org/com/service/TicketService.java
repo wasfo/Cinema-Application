@@ -21,8 +21,12 @@ public class TicketService {
         this.ticketRepository = ticketRepository;
     }
 
-    public List<Ticket> findAllTicketsByUserName(String username) {
+    public List<Ticket> findTicketsByUsername(String username) {
         return ticketRepository.findTicketByUsername(username);
+    }
+
+    public void deleteTicketById(long ticketId) {
+        ticketRepository.deleteById(ticketId);
     }
 
     public Optional<Ticket> findById(long id) {
@@ -34,7 +38,7 @@ public class TicketService {
         try {
             float ticketPrice = cinema.getPrice() + seat.getSeatPrice();
             Ticket ticket = new Ticket(cinema.getMovie().getName(),
-                    user.getEmail(), cinema, ticketPrice);
+                    user.getEmail(), cinema, seat, ticketPrice);
 
             saveTicket(ticket);
         } catch (Exception e) {

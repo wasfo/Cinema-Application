@@ -1,44 +1,32 @@
 package org.com.controller.exceptions;
 
-import org.com.exceptions.CinemaNotFoundException;
-import org.com.exceptions.CinemaStillHasReservedSeatsException;
-import org.com.exceptions.SeatAlreadyReservedException;
+import org.com.exceptions.CinemaException;
+import org.com.exceptions.SeatException;
 import org.com.exceptions.SeatNotFoundException;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(SeatAlreadyReservedException.class)
-    public String handleSeatAlreadyReservedException(SeatAlreadyReservedException ex,
+    @ExceptionHandler(SeatException.class)
+    public String handleSeatsException(SeatException ex,
                                                      RedirectAttributes redirectAttributes) {
-        Long cinemaId = (Long) redirectAttributes.getAttribute("cinemaId");
+
         redirectAttributes.addFlashAttribute("errorMessage", ex.getMessage());
-        return "redirect:/cinemas/seats?cinemaId=" + cinemaId;
+        return "redirect:/seats?error&cinemaId=" + ex.getCinemaId();
     }
 
-    @ExceptionHandler(CinemaNotFoundException.class)
-    public String handleCinemaNotFoundException(CinemaNotFoundException ex,
+    @ExceptionHandler(CinemaException.class)
+    public String handleCinemaNotFoundException(CinemaException ex,
                                                 RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("errorMessage", ex.getMessage());
         return "cinemas";
     }
 
-
-    @ExceptionHandler(CinemaStillHasReservedSeatsException.class)
-    public String handleSeatsReservedException(CinemaStillHasReservedSeatsException ex,
-                                               RedirectAttributes redirectAttributes) {
-
-        redirectAttributes.addFlashAttribute("errorMessage", ex.getMessage());
-        return "redirect:/cinemas";
-    }
-
     @ExceptionHandler(SeatNotFoundException.class)
-    public String handleSeatNotFoundException(CinemaNotFoundException ex,
+    public String handleSeatNotFoundException(CinemaException ex,
                                               RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("errorMessage", ex.getMessage());
         return "cinemas";

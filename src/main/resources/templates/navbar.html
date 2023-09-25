@@ -14,32 +14,42 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">About</a>
+                </li>
                 <li sec:authorize="isAuthenticated()">
                     <form action="#" th:action="@{/logout}" method="post"
                           style="position: absolute; top: 10px; right: 70px; font-size: 20px;color: ##F0FFFF;">
-                        <button type="submit" class="btn btn-outline-danger">Logout</button>
+                        <button type="submit" class="btn btn-danger">Logout</button>
                     </form>
                 </li>
                 <div sec:authorize="isAnonymous()">
                     <li class="nav-item">
-                        <a class="btn btn-outline-primary" href="@{/login}"
+                        <a class="btn btn-primary" th:href="@{/login}"
                            style="position: absolute; top: 10px; right: 70px; font-size: 17px"
                         >Login</a>
 
                     </li>
 
                     <li id="custom-item" class="nav-item"
-                        style="position: absolute; top: 10px; right: 240px; font-size: 17px">
-                        <a class="btn btn-outline-success" href="@{/register}">Register</a>
+                        style="position: absolute; top: 10px; right: 150px; font-size: 17px">
+                        <a class="btn btn-success" th:href="@{/register}">Register</a>
                     </li>
 
                 </div>
                 <div sec:authorize="hasRole('USER')">
 
                     <li class="nav-item"
-                        style="position: absolute; top: 10px; right: 240px; font-size: 17px">
-                        <a class="btn btn-info" href="@{/tickets}">My Tickets</a>
+                        style="position: absolute; top: 10px; right: 200px; font-size: 17px">
+                        <a class="btn btn-info" th:href="@{/tickets}">My Tickets</a>
+                    </li>
+
+                </div>
+
+                <div sec:authorize="hasRole('ADMIN')">
+                    <li class="nav-item"
+                        style="position: absolute; top: 10px; right: 200px; font-size: 17px">
+                        <a class="btn btn-info" th:href="@{/admin}">Admin Manager</a>
                     </li>
 
                 </div>

@@ -35,6 +35,7 @@ public class SpringSecurity {
                                 .requestMatchers("/register/**").permitAll()
                                 .requestMatchers("/cinemas/**").permitAll()
                                 .requestMatchers("/seats/**").permitAll()
+                                .requestMatchers("/about").permitAll()
                                 .requestMatchers("/admin/**").permitAll()
                                 .anyRequest().authenticated()
                 ).csrf(AbstractHttpConfigurer::disable)

@@ -6,7 +6,7 @@ import org.com.dto.MovieDto;
 import org.com.dto.TicketStatisticDto;
 import org.com.entity.Movie;
 import org.com.entity.Room;
-import org.com.exceptions.CinemaStillHasReservedSeatsException;
+import org.com.exceptions.CinemaException;
 import org.com.exceptions.MovieDuplicateException;
 import org.com.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,8 +94,8 @@ public class AdminController {
 
     @PostMapping("/cinema/delete")
     public String deleteCinema(@RequestParam("cinemaId") long cinemaId)
-            throws CinemaStillHasReservedSeatsException {
-        System.out.println("CINMA IDEEEEEEEE -> " + cinemaId);
+            throws CinemaException {
+
         cinemaService.deleteCinemaById(cinemaId);
         return "redirect:/cinemas?deleted";
     }

@@ -20,7 +20,7 @@
             padding: 5px; /* Add padding to the container */
     }
     .ticket-card {
-            background-color: #7FFFD4;
+            background-color: #F5F5DC;
             width: 300px;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -33,31 +33,30 @@
 
 
         }
-           .ticket-box {
-
-            border: 1px solid #ccc;
-            padding: 20px;
-            margin: 20px auto;
-            max-width: 400px;
-            background-color: #f9f9f9;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+   .ticket-box {
+    background-color: #F0F8FF;
+    border: 3px solid #ccc;
+    padding: 20px;
+    margin: 5px auto;
+    max-width: 400px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
         }
 
         /* Style for the title */
-        .box-title {
+    .box-title {
 
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 10px;
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
 
-            text-align: center
+        text-align: center
         }
 
         /* Style for the card list */
-        .card-list {
-
-            list-style: none;
-            padding: 0;
+    .card-list {
+        display: flex;
+        list-style: none;
+        padding: 0;
 }
     .ticket-details{
 
@@ -76,6 +75,10 @@
 
 <div th:insert="~{navbar :: navbar}"></div>
 
+<div th:if="${param.success}" class="box">
+    <div class="alert alert-info" >You've successfully refunded your ticket!</div>
+</div>
+
 <br>
 <br>
 <div class=" ticket-box ">
@@ -86,9 +89,12 @@
                 <p th:text="'Date: ' + ${ticket.cinema.showdate}"></p>
                 <p th:text="'time: ' + ${ticket.cinema.showtime}"></p>
                 <p th:text="'ticket price: ' + ${ticket.price}"></p>
-                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#reservationModal">
-                    Refund Ticket
-                </button>
+                <form th:action="@{/tickets/delete}" method="post">
+                    <button name="ticketId"
+                            th:value="${ticket.id}" class="btn btn-danger">Refund Ticket
+                    </button>
+                </form>
+
             </li>
     </ul>
 </div>

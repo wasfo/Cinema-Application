@@ -12,7 +12,7 @@ public class LoginController {
 
     @GetMapping("/login")
     public String loginForm() {
-        return "newLogin";
+        return "fancyLogin";
     }
 
     @GetMapping("/successLogin")

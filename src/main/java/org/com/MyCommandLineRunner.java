@@ -5,9 +5,14 @@ import org.com.entity.*;
 import org.com.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.cglib.core.Local;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.sql.Date;
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashSet;
@@ -49,9 +54,6 @@ public class MyCommandLineRunner implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) throws Exception {
-        List<Ticket> tickets = ticketRepository.findTicketByUsername("sara");
-        System.out.println("FOUDN TICKET ->");
-        System.out.println(tickets);
 //        createUsers();
 //        createCinemas();
     }
@@ -72,7 +74,7 @@ public class MyCommandLineRunner implements CommandLineRunner {
     }
 
 
-    public void createCinemas() {
+    public void createCinemas() throws ParseException {
         Movie avengers = new Movie("avengers", (short) 120, 7.9F);
         Movie shutter = new Movie("shutter Island", (short) 150, 8.5F);
         Movie Frozen = new Movie("Frozen", (short) 180, 8.2F);
@@ -84,19 +86,27 @@ public class MyCommandLineRunner implements CommandLineRunner {
         movieRepository.save(shutter);
         movieRepository.save(Frozen);
 
+
+        Date date1 = Date.valueOf("2023-11-31");
         Cinema cinema1 = new Cinema(LocalTime.of(3, 0).toString(),
-                LocalDate.of(2023, 10, 1).toString(),
+                date1,
                 (short) 64,
                 15, room, avengers);
 
         Cinema cinema2 = new Cinema(LocalTime.of(3, 0).toString(),
-                LocalDate.of(2023, 10, 2).toString(),
+                Date.valueOf("2023-09-30"),
                 (short) 64,
                 15, room2, shutter);
         Cinema cinema3 = new Cinema(LocalTime.of(2, 0).toString(),
-                LocalDate.of(2023, 10, 3).toString(),
+                Date.valueOf("2023-10-05"),
                 (short) 64,
                 15, room, Frozen);
-        cinemaRepository.saveAll(List.of(cinema1, cinema2, cinema3));
+        Cinema cinema4 = new Cinema(LocalTime.of(2, 0).toString(),
+                Date.valueOf("2023-09-12"),
+                (short) 64,
+                15, room, Frozen);
+        cinemaRepository.saveAll(List.of(cinema1, cinema2, cinema3, cinema4));
     }
+
+
 }

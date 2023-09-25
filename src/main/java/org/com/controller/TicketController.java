@@ -28,15 +28,15 @@ public class TicketController {
     @GetMapping
     public String showTickets(Model model) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        List<Ticket> tickets = ticketService.findAllTicketsByUserName(username);
+        List<Ticket> tickets = ticketService.findTicketsByUsername(username);
         model.addAttribute("tickets", tickets);
-
         return "tickets";
     }
 
     @PostMapping("/delete")
-    public void deleteTicket(@RequestParam("ticketId") long ticketId) {
+    public String deleteTicket(@RequestParam("ticketId") long ticketId) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-
+        ticketService.deleteTicketById(ticketId);
+        return "redirect:/tickets?success";
     }
 }

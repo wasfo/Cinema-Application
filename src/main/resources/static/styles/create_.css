@@ -1,26 +1,28 @@
 body {
-        background-image: url('/images/dark.jpg');
+        background-image: url('/images/admin.jpg');
         font-family: Arial, sans-serif;
-        background-size: cover; /* Adjust as needed */
+        background-size: cover;
         background-repeat: no-repeat;
         margin: 0;
         padding: 0;
         font-family: Arial, sans-serif;
         }
 
-        /* Style the form container */
+
         .form-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: calc(100vh - 40px); /* Subtract navbar height */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 40px);
         }
         .form-title {
-            font-size: 20px; /* Set the desired font size for the title */
-            margin-bottom: 10px; /* Add margin to separate the title from the form */
+        font-size: 20px;
+        margin-bottom: 10px;
         }
-        form {
-        background-image: url('/images/dark2.jpg');
+        .shit {
+        background-image: url('/images/black.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
         text-align: left;
         padding: 20px;
         border: 2px solid #ccc;

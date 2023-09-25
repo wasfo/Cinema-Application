@@ -1,11 +1,13 @@
     /* Example styles: */
         body {
-            background-image: url('/images/dark2.jpg');
-            font-family: Arial, sans-serif;
-            padding: 20px;
+          background-image: url('/images/admin.jpg');
+          background-repeat: no-repeat;
+          background-size: cover;
+          font-family: Arial, sans-serif;
         }
 
         .container {
+            margin-top: 50px;
             background-color: #fff;
             padding: 20px;
             border-radius: 5px;
@@ -35,7 +37,7 @@
 
         th {
             background-color: #007bff;
-            color: #fff;
+            color: #000;
         }
 
         tr:nth-child(even) {

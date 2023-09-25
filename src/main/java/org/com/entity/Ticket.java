@@ -27,13 +27,18 @@ public class Ticket {
     @JoinColumn(name = "cinema_id")
     private Cinema cinema;
 
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "seat_id")
+    private Seat seat;
+
     @Column
     private float price;
 
-    public Ticket(String movieName, String username, Cinema cinema, float price) {
+    public Ticket(String movieName, String username, Cinema cinema, Seat seat, float price) {
         this.movieName = movieName;
         this.username = username;
         this.cinema = cinema;
+        this.seat = seat;
         this.price = price;
     }
 

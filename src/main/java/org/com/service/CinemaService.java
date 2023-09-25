@@ -3,8 +3,7 @@ package org.com.service;
 
 import org.com.dto.CinemaDto;
 import org.com.entity.Cinema;
-import org.com.exceptions.CinemaNotFoundException;
-import org.com.exceptions.CinemaStillHasReservedSeatsException;
+import org.com.exceptions.CinemaException;
 import org.com.repository.CinemaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,25 +22,24 @@ public class CinemaService {
     }
 
     public List<CinemaDto> findAllCinemas() {
-        List<Cinema> cinemas = cinemaRepository.findAll();
+        List<Cinema> cinemas = cinemaRepository.findCurrentCinemas();
         return cinemas.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
 
     }
 
-    public Cinema findById(Long cinemaId) throws CinemaNotFoundException {
+    public Cinema findById(Long cinemaId) throws CinemaException {
         Cinema cinema = cinemaRepository
-                .findById(cinemaId).orElseThrow(() -> new CinemaNotFoundException("Cinema not found"));
+                .findById(cinemaId).orElseThrow(() -> new CinemaException("Cinema not found"));
         return cinema;
     }
 
-    public void deleteCinemaById(long cinemaId) {
+    public void deleteCinemaById(long cinemaId) throws CinemaException {
         try {
             cinemaRepository.deleteById(cinemaId);
         } catch (Exception e) {
-            System.out.println("EXCEPTION ->" + e.getMessage());
-            throw new CinemaStillHasReservedSeatsException("Cinema still has seats reserved. delete seats first");
+            throw new CinemaException("Cinema still has seats reserved. delete seats first");
         }
 
     }

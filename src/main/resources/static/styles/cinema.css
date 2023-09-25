@@ -1,20 +1,21 @@
  body {
-    background-image: url('/images/dark2.jpg');
+    background-image: url('/images/wall.jpg');
     font-family: Arial, sans-serif;
     background-size: cover; /* Adjust as needed */
     background-repeat: no-repeat;
+    color: white;
     }
     .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         }
 
-        .logout-btn {
-        position: absolute;
-        top: 10px;
-        right: 50px;
-        font-size: 20px;
+    .logout-btn {
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    font-size: 20px;
     }
     .register-btn {
         position: absolute;
@@ -23,15 +24,18 @@
         font-size: 20px;
     }
     .text-style {
-    font-style: Segoe UI;
+    font-family: Arial, sans-serif;
     font-weight: bold;
     text-transform: uppercase;
     color: #F0F8FF; /* Blue color */
+    font-size: 25px;
+
     }
     .time{
-
+    font-family: Arial, sans-serif;
     font-style: italic;
     text-decoration: underline;
+    font-size: 25px;
     }
     .price{
     font-weight: bold;
@@ -51,6 +55,7 @@
 
     .movie-catalog {
     padding: 20px;
+
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     }
 

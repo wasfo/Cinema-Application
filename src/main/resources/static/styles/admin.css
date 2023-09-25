@@ -1,12 +1,8 @@
 
-
-
-
-
-
-
 body {
-    background-image: url('/images/dark2.jpg');
+    background-image: url('/images/admin.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
     font-family: Arial, sans-serif;
     }
 

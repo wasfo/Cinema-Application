@@ -6,8 +6,8 @@ import org.com.dto.SeatDto;
 import org.com.entity.Cinema;
 import org.com.entity.Seat;
 import org.com.entity.User;
-import org.com.exceptions.CinemaNotFoundException;
-import org.com.exceptions.SeatAlreadyReservedException;
+import org.com.exceptions.CinemaException;
+import org.com.exceptions.SeatException;
 import org.com.exceptions.SeatNotFoundException;
 import org.com.repository.SeatRepository;
 import org.com.repository.TicketRepository;
@@ -15,29 +15,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 @Service
 public class SeatsService {
 
     private final SeatRepository seatRepository;
-    private final TicketRepository ticketRepository;
-    private CinemaService cinemaService;
+    private final ValidationService validationService;
+    private final CinemaService cinemaService;
 
     @Autowired
     public SeatsService(SeatRepository seatRepository,
-                        TicketRepository ticketRepository,
+                        ValidationService validationService, TicketRepository ticketRepository,
                         CinemaService cinemaService) {
 
         this.seatRepository = seatRepository;
-        this.ticketRepository = ticketRepository;
+        this.validationService = validationService;
         this.cinemaService = cinemaService;
     }
 
-    public List<SeatDto> findAllSeats(Long cinemaId) throws CinemaNotFoundException {
+    public List<SeatDto> findAllSeats(Long cinemaId) throws CinemaException {
         List<Seat> reservedSeats = seatRepository.findByCinemaId(cinemaId);
         List<Integer> seatNumbers = new ArrayList<>(reservedSeats
                 .stream()
@@ -52,7 +48,7 @@ public class SeatsService {
 
         List<SeatDto> allseats = new ArrayList<>();
         for (int i = 1; i <= numberOfSeats; i++) {
-            SeatDto seat = new SeatDto(i );
+            SeatDto seat = new SeatDto(i);
             if (!queue.isEmpty() && queue.peek() == i) {
                 seat.setReserved(true);
                 queue.poll();
@@ -75,14 +71,17 @@ public class SeatsService {
         return seatRepository.findBySeatNumber(seatNum);
     }
 
-    public int reserveSeat(Cinema cinema, User user, int seatNumber) throws SeatAlreadyReservedException {
+    public void reserveSeat(Cinema cinema, User user, int seatNumber) throws SeatException {
+        boolean isSeatNumberValid = validationService.
+                isSeatNumberValid(seatNumber, cinema.getRoom().getNumberOfSeats());
+        if (!isSeatNumberValid)
+            throw new SeatException("selected is seat out of range", cinema.getId());
 
         try {
             Seat seat = new Seat(seatNumber, cinema, user);
             seatRepository.save(seat);
-            return seatNumber;
         } catch (Exception e) {
-            throw new SeatAlreadyReservedException("this seat has been already reserved.");
+            throw new SeatException("This seat is already reserved." + "\n" + "find different one.", cinema.getId());
         }
 
     }

@@ -4,12 +4,11 @@ package org.com.dto;
 import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.com.entity.Movie;
 import org.com.entity.Room;
+
+import java.sql.Date;
 
 @Getter
 @Setter
@@ -18,7 +17,7 @@ import org.com.entity.Room;
 public class CinemaDto {
     private Long id;
     private String showtime;
-    private String showdate;
+    private Date showdate;
     private short availableseats;
     private float price;
     private Room room;

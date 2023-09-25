@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +15,6 @@
 <div class="container mt-5">
     <h1 class="text-center" style="color: lightgrey; font-weight: bold; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;">Admin Manager</h1>
     <div class="row mt-4">
-        <!-- Card 1 -->
 
         <div class="card">
             <img src="/images/stats.png" class="card-img-top" alt="Image 1">
@@ -28,7 +26,6 @@
         </div>
 
 
-        <!-- Card 2 -->
         <div class="card">
             <img src="/images/movie.jpg" class="card-img-top" alt="Image 2">
             <div class="card-body">
@@ -39,7 +36,6 @@
         </div>
 
 
-        <!-- Card 3 -->
 
         <div class="card">
             <img src="/images/cinema.jpg" class="card-img-top">
@@ -48,28 +44,12 @@
                 <p class="card-text">create more cinemas.</p>
                 <a th:href="@{/admin/cinema/create}" class="btn btn-primary">Create Cinemas</a>
                 <a th:href="@{/cinemas}" class="btn btn-danger glowing">Delete Cinemas</a>
-
             </div>
         </div>
 
-        <!-- Card 4 -->
-
-        <div class="card">
-            <img src="/images/users.png" class="card-img-top">
-            <div class="card-body">
-                <h5 class="card-title">Users Information</h5>
-                <p class="card-text">see users registered and tickets.</p>
-                <a th:href="@{/admin/cinema/create}" class="btn btn-primary">See more</a>
-            </div>
-        </div>
 
     </div>
 </div>
-
-<!-- Include Bootstrap JS and jQuery -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
 </html>

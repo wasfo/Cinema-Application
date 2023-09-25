@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -30,7 +31,7 @@ public class Cinema {
     private String showtime;
 
     @Column(name = "showdate")
-    private String showdate;
+    private Date showdate;
 
     @Column(name = "available_seats")
     private short availableseats;
@@ -46,11 +47,11 @@ public class Cinema {
     @JoinColumn(name = "movie_id")
     private Movie movie;
 
-    @OneToMany(mappedBy = "cinema", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cinema")
     private List<Ticket> tickets;
 
 
-    public Cinema(String showtime, String showdate,
+    public Cinema(String showtime, Date showdate,
                   short availableseats,
                   float price,
                   Room room,

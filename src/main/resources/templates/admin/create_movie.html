@@ -15,16 +15,18 @@
 
 <body>
 
-<div th:insert="~{navbar :: navbar}">  </div>
-<div class="form-container">
-    <form th:object="${movieDto}" th:action="@{/admin/movie/create}" method="post" enctype="multipart/form-data"
-          class="form-horizontal">
-        <h1>Create Movie</h1>
-        <div th:if="${param.success}">
-            <div class="alert alert-info" style="display: flex;">You've successfully created new movie</div>
-        </div>
 
-        <h1> Create Movie</h1>
+<div th:insert="~{navbar :: navbar}">  </div>
+
+<div th:if="${param.success}">
+    <div class="alert alert-info" style="display: flex;">You've successfully created new movie</div>
+</div>
+
+<div class="form-container">
+    <form  th:object="${movieDto}" th:action="@{/admin/movie/create}" method="post" enctype="multipart/form-data"
+          class="shit">
+        <h1 style="color: white; text-align: center;">Create Movie</h1>
+
         <div class="mb-3">
             <label for="name" class="form-label">Movie Name:</label>
             <input type="text" id="name" th:field="*{name}" class="form-control">
@@ -48,7 +50,13 @@
         <div class="center-button">
             <button type="submit" class="btn btn-primary btn-lg">Create Movie</button>
         </div>
+
+        <div>
+            <a th:href="@{/admin}" class="btn btn-primary">Back</a>
+        </div>
     </form>
+
+
 </div>
 
 </body>
