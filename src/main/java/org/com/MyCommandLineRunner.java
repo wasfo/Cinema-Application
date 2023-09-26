@@ -1,8 +1,11 @@
 package org.com;
 
 import jakarta.transaction.Transactional;
+import org.com.dto.CinemaDto;
 import org.com.entity.*;
+import org.com.exceptions.CinemaException;
 import org.com.repository.*;
+import org.com.service.CinemaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.cglib.core.Local;
@@ -23,40 +26,38 @@ import java.util.Set;
 @Component
 public class MyCommandLineRunner implements CommandLineRunner {
 
+    @Autowired
+    private CinemaService cinemaService;
+    @Autowired
     private CinemaRepository cinemaRepository;
+    @Autowired
     private MovieRepository movieRepository;
+    @Autowired
     private RoomRepository roomRepository;
+    @Autowired
     private SeatRepository seatRepository;
+    @Autowired
     private UserRepository userRepository;
+    @Autowired
     private TicketRepository ticketRepository;
+    @Autowired
     private RoleRepository roleRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    public MyCommandLineRunner(CinemaRepository repository,
-                               MovieRepository movieRepository,
-                               RoomRepository roomRepository,
-                               SeatRepository seatRepository,
-                               UserRepository userRepository,
-                               TicketRepository ticketRepository,
-                               RoleRepository roleRepository) {
-        this.cinemaRepository = repository;
-        this.movieRepository = movieRepository;
-        this.roomRepository = roomRepository;
-        this.seatRepository = seatRepository;
-        this.userRepository = userRepository;
-        this.ticketRepository = ticketRepository;
-        this.roleRepository = roleRepository;
-    }
 
     @Override
     @Transactional
-    public void run(String... args) throws Exception {
-//        createUsers();
-//        createCinemas();
+    public void run(String... args) throws CinemaException {
+
     }
+
+
+    public List<Cinema> findCinemasByDate(Date date) {
+        return cinemaRepository.findByShowDate(date);
+    }
+
 
     public void createUsers() {
         Role admin = new Role("ROLE_ADMIN");
@@ -116,7 +117,6 @@ public class MyCommandLineRunner implements CommandLineRunner {
                 15, room, frozen);
         cinemaRepository.saveAll(List.of(cinema1, cinema2, cinema3, cinema4));
     }
-
 
 
 }

@@ -23,7 +23,6 @@ import java.util.Optional;
 public class SeatController {
 
     private final Logger logger = LoggerFactory.getLogger(SeatController.class);
-
     private final SeatsService seatsService;
     private final CinemaService cinemaService;
     private final UserService userService;

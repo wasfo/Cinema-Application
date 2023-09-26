@@ -1,5 +1,6 @@
 package org.com.controller.exceptions;
 
+import org.com.exceptions.CinemaCreationException;
 import org.com.exceptions.CinemaException;
 import org.com.exceptions.SeatException;
 import org.com.exceptions.SeatNotFoundException;
@@ -18,10 +19,17 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(CinemaException.class)
-    public String handleCinemaNotFoundException(CinemaException ex,
+    public String handleCinemaException(CinemaException ex,
                                                 RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("errorMessage", ex.getMessage());
         return "redirect:/cinemas";
+    }
+
+    @ExceptionHandler(CinemaCreationException.class)
+    public String handleCinemaCreationException(CinemaCreationException ex,
+                                                RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("errorMessage", ex.getMessage());
+        return "redirect:/admin/cinema/create";
     }
     @ExceptionHandler(SeatNotFoundException.class)
     public String handleSeatNotFoundException(CinemaException ex,

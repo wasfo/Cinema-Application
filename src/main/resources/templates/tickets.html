@@ -85,16 +85,15 @@
     <div class="box-title">My Tickets</div>
     <ul th:each="ticket: ${tickets}" class="card-list">
             <li class="ticket-card">
-                <p class="ticket-details" th:text="'movie name : ' + ${ticket.movieName}"></p>
-                <p th:text="'Date: ' + ${ticket.cinema.showdate}"></p>
-                <p th:text="'time: ' + ${ticket.cinema.showtime}"></p>
-                <p th:text="'ticket price: ' + ${ticket.price}"></p>
+                <p class="ticket-details" th:text="'Movie: ' + ${ticket.movieName}"></p>
+                <p th:text="'Date: ' + ${ticket.cinema.showDate}"></p>
+                <p th:text="'Time: ' + ${ticket.cinema.startTime}"></p>
+                <p th:text="'Ticket price: ' + ${ticket.price}"></p>
                 <form th:action="@{/tickets/delete}" method="post">
                     <button name="ticketId"
                             th:value="${ticket.id}" class="btn btn-danger">Refund Ticket
                     </button>
                 </form>
-
             </li>
     </ul>
 </div>

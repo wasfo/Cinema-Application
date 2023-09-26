@@ -1,7 +1,9 @@
 package org.com.controller;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.com.dto.CinemaDto;
+import org.com.entity.Cinema;
 import org.com.repository.CinemaRepository;
 import org.com.service.CinemaService;
 import org.slf4j.Logger;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
+@Slf4j
 public class CinemaController {
 
     private final Logger logger = LoggerFactory.getLogger(CinemaController.class);
@@ -33,6 +36,7 @@ public class CinemaController {
         logger.info("logged in user is {}", userEmail);
 
         List<CinemaDto> cinemas = cinemaService.findAllCinemas();
+
         model.addAttribute("cinemas", cinemas);
         return "cinemas";
     }

@@ -15,18 +15,22 @@
 
 <div th:insert="~{navbar :: navbar}">  </div>
 
+<div th:if="${errorMessage}"  class="box">
+    <p class="alert alert-danger" style="width: 400px;" th:text="${errorMessage}"></p>
+</div>
+
 <div class="form-container">
 
     <form th:object="${cinemaDto}" th:action="@{/admin/cinema/create}" method="post" class="shit">
         <h1 style="color: white; text-align: center;">Create Cinema</h1>
         <div class="mb-3">
-            <label for="showtime" class="form-label">Show time:</label>
-            <input type="time" id="showtime" th:field="*{showtime}" class="form-control">
+            <label for="startTime" class="form-label">Show time:</label>
+            <input type="time" id="startTime" th:field="*{startTime}" class="form-control">
         </div>
 
         <div class="mb-3">
-            <label for="showdate">Show date:</label>
-            <input type="date" id="showdate" th:field="*{showdate}" class="form-control"><br>
+            <label for="showDate">Show date:</label>
+            <input type="date" id="showDate" th:field="*{showDate}" class="form-control"><br>
         </div>
 
         <div class="mb-3">

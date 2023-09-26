@@ -2,16 +2,13 @@ package org.com.entity;
 
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import lombok.Data;
+
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.sql.Date;
 import java.sql.Time;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
 @Getter
@@ -72,7 +69,6 @@ public class Cinema {
     @Override
     public String toString() {
         return "Cinema{" +
-                "id=" + id +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 ", showdate=" + showDate +
@@ -85,9 +81,4 @@ public class Cinema {
     }
 
 
-    public static void main(String[] args) {
-        for (int i = 0; i < 24; i++) {
-
-        }
-    }
 }

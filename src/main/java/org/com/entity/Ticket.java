@@ -34,7 +34,12 @@ public class Ticket {
     @Column
     private float price;
 
-    public Ticket(String movieName, String username, Cinema cinema, Seat seat, float price) {
+    public Ticket(String movieName,
+                  String username,
+                  Cinema cinema,
+                  Seat seat,
+                  float price) {
+
         this.movieName = movieName;
         this.username = username;
         this.cinema = cinema;

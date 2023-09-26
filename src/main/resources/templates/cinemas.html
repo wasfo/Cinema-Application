@@ -19,6 +19,9 @@
     text-align: center;
     display: flex; justify-content: center; margin-top: 35px;
     }
+
+
+
 </style>
 <body>
 <div th:insert="~{navbar :: navbar}"></div>
@@ -28,10 +31,9 @@
 </div>
 
 
-<div th:if="${errorMessage}"  class="box">
+<div th:if="${errorMessage}" class="box">
     <p class="alert alert-danger" style="width: 400px;" th:text="${errorMessage}"></p>
 </div>
-
 
 
 <div th:if="${param.deleted}" class="box">
@@ -56,7 +58,9 @@
                     <th>Show Date</th>
                     <th>Available seats</th>
                     <th>Room Name</th>
+                    <th>Status</th>
                     <th>Ticket Price</th>
+
                 </tr>
                 </thead>
                 <tbody>
@@ -66,15 +70,20 @@
                     <td th:text="${cinema.showDate}" class="time text-style"></td>
                     <td th:text="${cinema.availableSeats}" class="text-style"></td>
                     <td th:text="${cinema.room.name}" class="text-style"></td>
+                    <td th:text="${cinema.isExpired ? 'Expired' : 'Active'}" class="text-style"></td>
                     <td colspan="2">
                         <span th:text="${cinema.price} +'$'" class="price"></span>
                         <form th:action="@{/seats}" method="get">
                             <!--                        <input type="hidden" name="cinemaId" th:value="${cinema.id}"/>-->
-                            <button type="submit" name="cinemaId" th:value="${cinema.id}" class="btn btn-primary">Buy
-                                Ticket
-                            </button>
+                            <div sec:authorize="hasRole('USER')">
+                                <button type="submit" name="cinemaId" th:value="${cinema.id}" class="btn btn-primary">
+                                    Buy Ticket
+                                </button>
+                            </div>
                         </form>
                     </td>
+
+
                     <div sec:authorize="hasRole('ADMIN')">
                         <td colspan="2">
                             <form th:action="@{/admin/seats/deleteAll}" method="post">
@@ -90,6 +99,7 @@
                             </form>
                         </td>
                     </div>
+
 
                 </tr>
                 </tbody>

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.com.entity.Movie;
 import org.com.entity.Room;
+import org.springframework.cglib.core.Local;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -18,8 +19,8 @@ import java.time.LocalTime;
 @AllArgsConstructor
 public class CinemaDto {
     private Long id;
-    private Time startTime;
-    private Time endTime;
+    private String startTime;
+    private String endTime;
     private Date showDate;
     private short availableSeats;
     private float price;
@@ -41,4 +42,5 @@ public class CinemaDto {
                 ", movie=" + movie +
                 '}';
     }
+
 }

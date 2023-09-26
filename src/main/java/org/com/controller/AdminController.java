@@ -1,26 +1,34 @@
 package org.com.controller;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.com.dto.CinemaDto;
 import org.com.dto.MovieDto;
 import org.com.dto.TicketStatisticDto;
 import org.com.entity.Movie;
 import org.com.entity.Room;
+import org.com.exceptions.CinemaCreationException;
 import org.com.exceptions.CinemaException;
 import org.com.exceptions.MovieDuplicateException;
 import org.com.service.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.sql.Time;
+import java.time.LocalTime;
 import java.util.List;
 
 @Controller
+@Slf4j
 @RequestMapping("/admin")
 public class AdminController {
 
+    private final Logger logger = LoggerFactory.getLogger(AdminController.class);
     private final CinemaService cinemaService;
     private final SeatsService seatsService;
     private final MovieService movieService;
@@ -61,12 +69,20 @@ public class AdminController {
     @PostMapping("/cinema/create")
     public String createCinema(@ModelAttribute CinemaDto cinemaDto,
                                @RequestParam("movieId") long movieId,
-                               @RequestParam("roomId") long roomId) {
+                               @RequestParam("roomId") long roomId) throws CinemaCreationException {
 
         Room room = roomService.findRoomById(roomId);
         Movie movie = movieService.findById(movieId);
         cinemaDto.setRoom(room);
         cinemaDto.setMovie(movie);
+        cinemaDto.setStartTime(cinemaDto.getStartTime() + ":00");
+        LocalTime startTime = Time.valueOf(cinemaDto.getStartTime()).toLocalTime();
+        LocalTime endTime = startTime.plusMinutes(movie.getDurationInMinutes());
+        cinemaDto.setEndTime(endTime.toString() + ":00");
+
+        logger.info("start time is {}", startTime);
+        logger.info("end time is {}", endTime);
+
         cinemaService.createCinema(cinemaDto);
         return "redirect:/cinemas";
     }

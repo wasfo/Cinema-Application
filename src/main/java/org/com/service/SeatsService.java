@@ -2,8 +2,6 @@ package org.com.service;
 
 
 import jakarta.transaction.Transactional;
-import org.com.controller.SeatController;
-import org.com.dto.CinemaDto;
 import org.com.dto.SeatDto;
 import org.com.entity.Cinema;
 import org.com.entity.Seat;
@@ -18,16 +16,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.*;
 
 @Service
 public class SeatsService {
 
     private final SeatRepository seatRepository;
+
+    private final TicketRepository ticketRepository;
     private final ValidationService validationService;
     private final CinemaService cinemaService;
 
@@ -36,10 +33,11 @@ public class SeatsService {
     @Autowired
     public SeatsService(SeatRepository seatRepository,
                         ValidationService validationService, TicketRepository ticketRepository,
-                        CinemaService cinemaService) {
+                        TicketRepository ticketRepository1, CinemaService cinemaService) {
 
         this.seatRepository = seatRepository;
         this.validationService = validationService;
+        this.ticketRepository = ticketRepository1;
         this.cinemaService = cinemaService;
     }
 
@@ -74,7 +72,7 @@ public class SeatsService {
 
     @Transactional
     public void deleteAllSeats(long cinemaId) {
-        seatRepository.deleteByCinemaId(cinemaId);
+        ticketRepository.deleteByCinemaId(cinemaId);
     }
 
     public Seat findBySeatNumber(int seatNum) {
@@ -88,6 +86,7 @@ public class SeatsService {
         boolean isCinemaExpired = validationService.isCinemaExpired(cinema);
 
         logger.info("is cinema {} expired {}", cinema.getId(), isCinemaExpired);
+
 
         if (isCinemaExpired) {
             throw new CinemaException("selected cinema is expired");
