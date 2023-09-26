@@ -45,7 +45,7 @@ public class AdminController {
     }
 
     @GetMapping("/cinema/create")
-    public String showCreateCinemaForm(Model model) {
+    public String showCinemaForm(Model model) {
         model.addAttribute("cinemaDto", new CinemaDto());
 
         List<Movie> movieList = movieService.findAllMovies();

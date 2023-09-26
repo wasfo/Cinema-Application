@@ -14,14 +14,17 @@ import java.util.stream.Collectors;
 @Service
 public class CinemaService {
 
-    private CinemaRepository cinemaRepository;
+    private final CinemaRepository cinemaRepository;
+    private final ValidationService validationService;
 
     @Autowired
-    public CinemaService(CinemaRepository cinemaRepository) {
+    public CinemaService(CinemaRepository cinemaRepository,
+                         ValidationService validationService) {
         this.cinemaRepository = cinemaRepository;
+        this.validationService = validationService;
     }
 
-    public List<CinemaDto> findAllCinemas() {
+    public List<CinemaDto> findNonExpiredCinemas() {
         List<Cinema> cinemas = cinemaRepository.findCurrentCinemas();
         return cinemas.stream()
                 .map(this::convertToDto)
@@ -29,10 +32,18 @@ public class CinemaService {
 
     }
 
+    public List<CinemaDto> findAllCinemas() {
+        List<Cinema> cinemas = cinemaRepository.findAll();
+        return cinemas.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+
+    }
+
     public Cinema findById(Long cinemaId) throws CinemaException {
-        Cinema cinema = cinemaRepository
-                .findById(cinemaId).orElseThrow(() -> new CinemaException("Cinema not found"));
-        return cinema;
+        return cinemaRepository
+                .findById(cinemaId)
+                .orElseThrow(() -> new CinemaException("Cinema not found"));
     }
 
     public void deleteCinemaById(long cinemaId) throws CinemaException {
@@ -49,18 +60,20 @@ public class CinemaService {
         cinemaDto.setId(cinema.getId());
         cinemaDto.setPrice(cinema.getPrice());
         cinemaDto.setMovie(cinema.getMovie());
-        cinemaDto.setAvailableseats(cinema.getAvailableseats());
+        cinemaDto.setAvailableSeats(cinema.getAvailableSeats());
         cinemaDto.setRoom(cinema.getRoom());
-        cinemaDto.setShowtime(cinema.getShowtime());
-        cinemaDto.setShowdate(cinema.getShowdate());
+        cinemaDto.setStartTime(cinema.getStartTime());
+        cinemaDto.setEndTime(cinema.getEndTime());
+        cinemaDto.setShowDate(cinema.getShowDate());
+        cinemaDto.setExpired(validationService.isCinemaExpired(cinema));
         return cinemaDto;
     }
 
     public void createCinema(CinemaDto cinemaDto) {
-        Cinema cinema = new Cinema(
-                cinemaDto.getShowtime(),
-                cinemaDto.getShowdate(),
-                cinemaDto.getAvailableseats(),
+        Cinema cinema = new Cinema(cinemaDto.getStartTime(),
+                cinemaDto.getEndTime(),
+                cinemaDto.getShowDate(),
+                cinemaDto.getAvailableSeats(),
                 cinemaDto.getPrice(),
                 cinemaDto.getRoom(),
                 cinemaDto.getMovie());

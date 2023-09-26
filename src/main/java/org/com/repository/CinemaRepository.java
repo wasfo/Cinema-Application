@@ -10,6 +10,8 @@ import java.util.List;
 @Repository
 public interface CinemaRepository extends JpaRepository<Cinema, Long> {
 
-    @Query("SELECT c FROM Cinema c WHERE c.showdate > CURRENT_TIMESTAMP")
+    @Query("SELECT c FROM Cinema c WHERE c.showDate > CURRENT_TIMESTAMP")
     List<Cinema> findCurrentCinemas();
+
+
 }

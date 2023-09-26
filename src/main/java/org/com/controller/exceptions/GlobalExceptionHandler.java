@@ -11,8 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(SeatException.class)
-    public String handleSeatsException(SeatException ex,
-                                                     RedirectAttributes redirectAttributes) {
+    public String handleSeatsException(SeatException ex, RedirectAttributes redirectAttributes) {
 
         redirectAttributes.addFlashAttribute("errorMessage", ex.getMessage());
         return "redirect:/seats?error&cinemaId=" + ex.getCinemaId();
@@ -22,9 +21,8 @@ public class GlobalExceptionHandler {
     public String handleCinemaNotFoundException(CinemaException ex,
                                                 RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("errorMessage", ex.getMessage());
-        return "cinemas";
+        return "redirect:/cinemas";
     }
-
     @ExceptionHandler(SeatNotFoundException.class)
     public String handleSeatNotFoundException(CinemaException ex,
                                               RedirectAttributes redirectAttributes) {

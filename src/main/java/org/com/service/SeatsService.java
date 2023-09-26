@@ -2,6 +2,8 @@ package org.com.service;
 
 
 import jakarta.transaction.Transactional;
+import org.com.controller.SeatController;
+import org.com.dto.CinemaDto;
 import org.com.dto.SeatDto;
 import org.com.entity.Cinema;
 import org.com.entity.Seat;
@@ -11,9 +13,15 @@ import org.com.exceptions.SeatException;
 import org.com.exceptions.SeatNotFoundException;
 import org.com.repository.SeatRepository;
 import org.com.repository.TicketRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 
 @Service
@@ -22,6 +30,8 @@ public class SeatsService {
     private final SeatRepository seatRepository;
     private final ValidationService validationService;
     private final CinemaService cinemaService;
+
+    private final Logger logger = LoggerFactory.getLogger(SeatsService.class);
 
     @Autowired
     public SeatsService(SeatRepository seatRepository,
@@ -71,9 +81,18 @@ public class SeatsService {
         return seatRepository.findBySeatNumber(seatNum);
     }
 
-    public void reserveSeat(Cinema cinema, User user, int seatNumber) throws SeatException {
+    public void reserveSeat(Cinema cinema, User user, int seatNumber) throws SeatException, CinemaException {
         boolean isSeatNumberValid = validationService.
                 isSeatNumberValid(seatNumber, cinema.getRoom().getNumberOfSeats());
+
+        boolean isCinemaExpired = validationService.isCinemaExpired(cinema);
+
+        logger.info("is cinema {} expired {}", cinema.getId(), isCinemaExpired);
+
+        if (isCinemaExpired) {
+            throw new CinemaException("selected cinema is expired");
+        }
+
         if (!isSeatNumberValid)
             throw new SeatException("selected is seat out of range", cinema.getId());
 
@@ -85,6 +104,7 @@ public class SeatsService {
         }
 
     }
+
 
     public void deleteSeat(long seatId) throws SeatNotFoundException {
         Optional<Seat> seat = seatRepository.findById(seatId);

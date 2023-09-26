@@ -8,6 +8,8 @@ import org.com.entity.User;
 import org.com.exceptions.CinemaException;
 import org.com.exceptions.SeatException;
 import org.com.service.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,8 @@ import java.util.Optional;
 
 @Controller
 public class SeatController {
+
+    private final Logger logger = LoggerFactory.getLogger(SeatController.class);
 
     private final SeatsService seatsService;
     private final CinemaService cinemaService;
@@ -50,24 +54,26 @@ public class SeatController {
 
     @PostMapping("/seats/reserve")
     public String reserveSeat(
-            @RequestParam("cinemaId") Long cinemaId, @RequestParam("seatNumber") String seatNumber)
+            @RequestParam("cinemaId") Long cinemaId,
+            @RequestParam("seatNumber") String seatNumber)
             throws SeatException, CinemaException {
 
 
         String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+
         if (userEmail.equals("anonymousUser")) {
             return "redirect:/login";
         }
-
 
         Cinema cinema = cinemaService.findById(cinemaId);
         Optional<User> user = userService.findByEmail(userEmail);
 
         seatsService.reserveSeat(cinema, user.get(), Integer.parseInt(seatNumber));
 
-        Seat seat = seatsService.findBySeatNumber(Integer.parseInt(seatNumber));
 
+        Seat seat = seatsService.findBySeatNumber(Integer.parseInt(seatNumber));
         ticketService.createTicket(cinema, user.get(), seat);
+        logger.info("{} booked a ticket", userEmail);
         return "redirect:/seats?cinemaId=" + cinemaId + "&success";
 
     }

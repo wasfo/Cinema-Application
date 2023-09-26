@@ -77,36 +77,46 @@ public class MyCommandLineRunner implements CommandLineRunner {
     public void createCinemas() throws ParseException {
         Movie avengers = new Movie("avengers", (short) 120, 7.9F);
         Movie shutter = new Movie("shutter Island", (short) 150, 8.5F);
-        Movie Frozen = new Movie("Frozen", (short) 180, 8.2F);
+        Movie frozen = new Movie("Frozen", (short) 180, 8.2F);
         Room room = new Room("A", 64);
         Room room2 = new Room("B", 64);
         roomRepository.save(room);
         roomRepository.save(room2);
         movieRepository.save(avengers);
         movieRepository.save(shutter);
-        movieRepository.save(Frozen);
+        movieRepository.save(frozen);
 
 
         Date date1 = Date.valueOf("2023-11-31");
-        Cinema cinema1 = new Cinema(LocalTime.of(3, 0).toString(),
+
+        Cinema cinema1 = new Cinema(
+                Time.valueOf(LocalTime.of(3, 0)),
+                Time.valueOf(LocalTime.of(3, 0).plusMinutes(avengers.getDurationInMinutes())),
                 date1,
                 (short) 64,
                 15, room, avengers);
 
-        Cinema cinema2 = new Cinema(LocalTime.of(3, 0).toString(),
+        Cinema cinema2 = new Cinema(
+                Time.valueOf(LocalTime.of(5, 0)),
+                Time.valueOf(LocalTime.of(5, 0).plusMinutes(avengers.getDurationInMinutes())),
                 Date.valueOf("2023-09-30"),
                 (short) 64,
                 15, room2, shutter);
-        Cinema cinema3 = new Cinema(LocalTime.of(2, 0).toString(),
+        Cinema cinema3 = new Cinema(
+                Time.valueOf(LocalTime.of(8, 0)),
+                Time.valueOf(LocalTime.of(8, 0).plusMinutes(avengers.getDurationInMinutes())),
                 Date.valueOf("2023-10-05"),
                 (short) 64,
-                15, room, Frozen);
-        Cinema cinema4 = new Cinema(LocalTime.of(2, 0).toString(),
+                15, room, frozen);
+        Cinema cinema4 = new Cinema(
+                Time.valueOf(LocalTime.of(12, 0)),
+                Time.valueOf(LocalTime.of(12, 0).plusMinutes(avengers.getDurationInMinutes())),
                 Date.valueOf("2023-09-12"),
                 (short) 64,
-                15, room, Frozen);
+                15, room, frozen);
         cinemaRepository.saveAll(List.of(cinema1, cinema2, cinema3, cinema4));
     }
+
 
 
 }

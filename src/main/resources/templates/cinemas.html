@@ -17,7 +17,7 @@
 
     .box {
     text-align: center;
-    display: flex; justify-content: center; margin-top: 50px;
+    display: flex; justify-content: center; margin-top: 35px;
     }
 </style>
 <body>
@@ -31,6 +31,8 @@
 <div th:if="${errorMessage}"  class="box">
     <p class="alert alert-danger" style="width: 400px;" th:text="${errorMessage}"></p>
 </div>
+
+
 
 <div th:if="${param.deleted}" class="box">
     <div class="alert alert-info" style="width: 400px;">You've successfully deleted the cinema</div>
@@ -60,9 +62,9 @@
                 <tbody>
                 <tr th:each="cinema: ${cinemas}">
                     <td th:text="${cinema.movie.name}" class="text-style"></td>
-                    <td th:text="${cinema.showtime}" class="time text-style"></td>
-                    <td th:text="${cinema.showdate}" class="time text-style"></td>
-                    <td th:text="${cinema.availableseats}" class="text-style"></td>
+                    <td th:text="${cinema.startTime}" class="time text-style"></td>
+                    <td th:text="${cinema.showDate}" class="time text-style"></td>
+                    <td th:text="${cinema.availableSeats}" class="text-style"></td>
                     <td th:text="${cinema.room.name}" class="text-style"></td>
                     <td colspan="2">
                         <span th:text="${cinema.price} +'$'" class="price"></span>

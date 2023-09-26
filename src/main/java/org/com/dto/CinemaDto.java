@@ -1,14 +1,16 @@
 package org.com.dto;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.com.entity.Movie;
 import org.com.entity.Room;
 
 import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -16,10 +18,12 @@ import java.sql.Date;
 @AllArgsConstructor
 public class CinemaDto {
     private Long id;
-    private String showtime;
-    private Date showdate;
-    private short availableseats;
+    private Time startTime;
+    private Time endTime;
+    private Date showDate;
+    private short availableSeats;
     private float price;
+    private boolean isExpired;
     private Room room;
     private Movie movie;
 
@@ -27,10 +31,12 @@ public class CinemaDto {
     public String toString() {
         return "CinemaDto{" +
                 "id=" + id +
-                ", showtime='" + showtime + '\'' +
-                ", showdate='" + showdate + '\'' +
-                ", availableseats=" + availableseats +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", showdate=" + showDate +
+                ", availableseats=" + availableSeats +
                 ", price=" + price +
+                ", isExpired=" + isExpired +
                 ", room=" + room +
                 ", movie=" + movie +
                 '}';
