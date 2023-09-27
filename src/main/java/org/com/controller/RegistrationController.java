@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @Controller
 public class RegistrationController {
-    private UserService userService;
+    private final UserService userService;
 
     @Autowired
     public RegistrationController(UserService userService) {
@@ -45,7 +45,7 @@ public class RegistrationController {
             model.addAttribute("user", user);
             return "register";
         }
-        userService.saveUser(user,"ROLE_CUSTOMER");
+        userService.saveUser(user,"ROLE_USER");
         return "redirect:/register?success";
     }
 }

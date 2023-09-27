@@ -50,9 +50,12 @@ public class MovieService {
 
     public boolean createMovie(MovieDto movieDto, String imageName) throws MovieDuplicateException {
 
-        Movie movie = new Movie(movieDto.getName(),
+        Movie movie = new Movie(
+                movieDto.getName(),
                 (short) movieDto.getDurationInMinutes(),
-                movieDto.getRating());
+                movieDto.getRating(),
+                movieDto.getGenre(),
+                movieDto.getDirector());
 
         movie.setImageName(imageName);
 

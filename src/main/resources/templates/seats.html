@@ -134,6 +134,7 @@
     }
 
 
+
     </style>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <!-- Add Bootstrap CSS and JavaScript -->
@@ -147,19 +148,17 @@
 <div th:insert="~{navbar :: navbar}"></div>
 
 
-<div th:if="${errorMessage}"  class="box">
+<div th:if="${errorMessage}" class="box">
     <div class="alert alert-danger" th:text="${errorMessage}"></div>
 </div>
 
 
 <div th:if="${param.success}" class="box">
-    <div class="alert alert-info" >You've successfully Reserved your Seat!</div>
+    <div class="alert alert-info">You've successfully Reserved your Seat!</div>
 </div>
 <br>
 <br>
 <div class="container text-center">
-
-
 
 
     <!-- Reservation Modal -->
@@ -177,8 +176,17 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="seatNumber">Seat Number:</label>
+                            <label for="seatNumber">Enter your Seat Number:</label>
                             <input type="text" class="form-control" id="seatNumber" name="seatNumber" required>
+                        </div>
+                    </div>
+
+                    <div sec:authorize="hasRole('ADMIN')">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="username">Enter username of the desired user:</label>
+                                <input type="text" class="form-control" id="username" name="username" required>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -218,19 +226,13 @@
                 <div th:each="seat, status: ${seats}" class="seat-icon"
                      th:classappend="${status.index < 8} ? 'gold' : ''">
                     <div class="seat-content">
-
                         <span th:classappend="${seat.isReserved} ? 'reserved' : ''" th:text="${seat.seatNumber}"
                               class="seat-number"></span>
                     </div>
                 </div>
-
             </div>
-
-
         </div>
-
     </div>
-
 </div>
 
 </body>

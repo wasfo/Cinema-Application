@@ -11,10 +11,13 @@ import org.com.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
@@ -43,6 +46,7 @@ public class SeatController {
     public String getAllSeats(@RequestParam(value = "cinemaId") Long cinemaId,
                               Model model) throws CinemaException {
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         List<SeatDto> seats = seatsService.findAllSeats(cinemaId);
 
@@ -54,25 +58,35 @@ public class SeatController {
     @PostMapping("/seats/reserve")
     public String reserveSeat(
             @RequestParam("cinemaId") Long cinemaId,
-            @RequestParam("seatNumber") String seatNumber)
+            @RequestParam("seatNumber") String seatNumber,
+            @RequestParam(name = "username", required = false) String username,
+            RedirectAttributes redirectAttributes)
             throws SeatException, CinemaException {
 
 
-        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
-
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userEmail = authentication.getName();
         if (userEmail.equals("anonymousUser")) {
             return "redirect:/login";
         }
-
-        Cinema cinema = cinemaService.findById(cinemaId);
-        Optional<User> user = userService.findByEmail(userEmail);
-
-        seatsService.reserveSeat(cinema, user.get(), Integer.parseInt(seatNumber));
+        boolean isAdmin = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .anyMatch(role -> role.equals("ROLE_ADMIN"));
 
 
-        Seat seat = seatsService.findBySeatNumber(Integer.parseInt(seatNumber));
-        ticketService.createTicket(cinema, user.get(), seat);
-        logger.info("{} booked a ticket", userEmail);
+        Optional<User> user;
+        if (isAdmin) {
+            user = userService.findByEmail(username);
+        } else {
+            user = userService.findByEmail(userEmail);
+        }
+        if (user.isPresent()) {
+            Cinema cinema = cinemaService.findById(cinemaId);
+            Optional<Seat> seat = seatsService.reserveSeat(cinema, user.get(), Integer.parseInt(seatNumber));
+            ticketService.createTicket(cinema, user.get(), seat.get());
+            logger.info("{} booked a ticket", userEmail);
+        }
+
         return "redirect:/seats?cinemaId=" + cinemaId + "&success";
 
     }

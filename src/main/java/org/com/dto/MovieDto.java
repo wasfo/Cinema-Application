@@ -18,6 +18,8 @@ public class MovieDto {
     private String name;
     private float durationInMinutes;
     private float rating;
+    private String genre;
+    private String director;
     private String image;
 
     @Override

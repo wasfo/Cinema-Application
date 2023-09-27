@@ -27,16 +27,24 @@ public class Movie {
     @Column(name = "rating")
     private float rating;
 
+    @Column(name = "genre")
+    private String genre;
+
+    @Column(name = "director")
+    private String director;
+
     @Column(name = "imageName")
     private String imageName;
 
     @OneToMany(mappedBy = "movie", fetch = FetchType.EAGER)
     private List<Cinema> cinemas;
 
-    public Movie(String name, short durationInMinutes, float rating) {
+    public Movie(String name, short durationInMinutes, float rating, String genre, String director) {
         this.name = name;
         this.durationInMinutes = durationInMinutes;
         this.rating = rating;
+        this.genre = genre;
+        this.director = director;
     }
 
     @Override

@@ -49,8 +49,9 @@ public class MyCommandLineRunner implements CommandLineRunner {
 
     @Override
     @Transactional
-    public void run(String... args) throws CinemaException {
-
+    public void run(String... args) {
+//        createUsers();
+//        createCinemas();
     }
 
 
@@ -75,10 +76,10 @@ public class MyCommandLineRunner implements CommandLineRunner {
     }
 
 
-    public void createCinemas() throws ParseException {
-        Movie avengers = new Movie("avengers", (short) 120, 7.9F);
-        Movie shutter = new Movie("shutter Island", (short) 150, 8.5F);
-        Movie frozen = new Movie("Frozen", (short) 180, 8.2F);
+    public void createCinemas() {
+        Movie avengers = new Movie("avengers", (short) 120, 7.9F, "Action", "Joe Russo");
+        Movie shutter = new Movie("shutter Island", (short) 150, 8.5F, "Mystery", "Martin Scorsese");
+        Movie frozen = new Movie("Frozen", (short) 180, 8.2F, "Family", "Jennifer Lee");
         Room room = new Room("A", 64);
         Room room2 = new Room("B", 64);
         roomRepository.save(room);
@@ -98,14 +99,14 @@ public class MyCommandLineRunner implements CommandLineRunner {
                 15, room, avengers);
 
         Cinema cinema2 = new Cinema(
-                Time.valueOf(LocalTime.of(5, 0)),
-                Time.valueOf(LocalTime.of(5, 0).plusMinutes(avengers.getDurationInMinutes())),
+                Time.valueOf(LocalTime.of(15, 0)),
+                Time.valueOf(LocalTime.of(15, 0).plusMinutes(avengers.getDurationInMinutes())),
                 Date.valueOf("2023-09-30"),
                 (short) 64,
                 15, room2, shutter);
         Cinema cinema3 = new Cinema(
-                Time.valueOf(LocalTime.of(8, 0)),
-                Time.valueOf(LocalTime.of(8, 0).plusMinutes(avengers.getDurationInMinutes())),
+                Time.valueOf(LocalTime.of(18, 0)),
+                Time.valueOf(LocalTime.of(18, 0).plusMinutes(avengers.getDurationInMinutes())),
                 Date.valueOf("2023-10-05"),
                 (short) 64,
                 15, room, frozen);

@@ -1,6 +1,4 @@
 package org.com.service;
-
-
 import jakarta.transaction.Transactional;
 import org.com.dto.SeatDto;
 import org.com.entity.Cinema;
@@ -23,11 +21,9 @@ import java.util.*;
 public class SeatsService {
 
     private final SeatRepository seatRepository;
-
     private final TicketRepository ticketRepository;
     private final ValidationService validationService;
     private final CinemaService cinemaService;
-
     private final Logger logger = LoggerFactory.getLogger(SeatsService.class);
 
     @Autowired
@@ -50,11 +46,10 @@ public class SeatsService {
 
         seatNumbers.sort(((o1, o2) -> o1 - o2));
         Queue<Integer> queue = new LinkedList<>(seatNumbers);
-
         Cinema cinema = cinemaService.findById(cinemaId);
         int numberOfSeats = cinema.getRoom().getNumberOfSeats();
 
-        List<SeatDto> allseats = new ArrayList<>();
+        List<SeatDto> allSeats = new ArrayList<>();
         for (int i = 1; i <= numberOfSeats; i++) {
             SeatDto seat = new SeatDto(i);
             if (!queue.isEmpty() && queue.peek() == i) {
@@ -63,11 +58,9 @@ public class SeatsService {
             } else {
                 seat.setReserved(false);
             }
-            allseats.add(seat);
+            allSeats.add(seat);
         }
-
-
-        return allseats;
+        return allSeats;
     }
 
     @Transactional
@@ -79,7 +72,7 @@ public class SeatsService {
         return seatRepository.findBySeatNumber(seatNum);
     }
 
-    public void reserveSeat(Cinema cinema, User user, int seatNumber) throws SeatException, CinemaException {
+    public Optional<Seat> reserveSeat(Cinema cinema, User user, int seatNumber) throws SeatException, CinemaException {
         boolean isSeatNumberValid = validationService.
                 isSeatNumberValid(seatNumber, cinema.getRoom().getNumberOfSeats());
 
@@ -87,17 +80,17 @@ public class SeatsService {
 
         logger.info("is cinema {} expired {}", cinema.getId(), isCinemaExpired);
 
-
         if (isCinemaExpired) {
-            throw new CinemaException("selected cinema is expired");
+            throw new CinemaException("Selected cinema is expired");
         }
 
         if (!isSeatNumberValid)
-            throw new SeatException("selected is seat out of range", cinema.getId());
+            throw new SeatException("Selected is seat out of range", cinema.getId());
 
         try {
             Seat seat = new Seat(seatNumber, cinema, user);
             seatRepository.save(seat);
+            return Optional.of(seat);
         } catch (Exception e) {
             throw new SeatException("This seat is already reserved." + "\n" + "find different one.", cinema.getId());
         }
@@ -122,8 +115,4 @@ public class SeatsService {
         return seatDto;
     }
 
-    public static void main(String[] args) {
-
-
-    }
 }

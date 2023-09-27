@@ -69,7 +69,7 @@ public class UserService {
 
     private Role createCustomerRole() {
         Role role = new Role();
-        role.setName("ROLE_CUSTOMER");
+        role.setName("ROLE_USER");
         return roleRepository.save(role);
     }
 }

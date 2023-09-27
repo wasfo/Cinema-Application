@@ -28,14 +28,14 @@
     font-weight: bold;
     text-transform: uppercase;
     color: #F0F8FF; /* Blue color */
-    font-size: 25px;
+    font-size: 20px;
 
     }
     .time{
     font-family: Arial, sans-serif;
     font-style: italic;
     text-decoration: underline;
-    font-size: 25px;
+    font-size: 20px;
     }
     .price{
     font-weight: bold;

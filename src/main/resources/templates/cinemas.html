@@ -22,6 +22,7 @@
 
 
 
+
 </style>
 <body>
 <div th:insert="~{navbar :: navbar}"></div>
@@ -75,11 +76,9 @@
                         <span th:text="${cinema.price} +'$'" class="price"></span>
                         <form th:action="@{/seats}" method="get">
                             <!--                        <input type="hidden" name="cinemaId" th:value="${cinema.id}"/>-->
-                            <div sec:authorize="hasRole('USER')">
-                                <button type="submit" name="cinemaId" th:value="${cinema.id}" class="btn btn-primary">
-                                    Buy Ticket
-                                </button>
-                            </div>
+                            <button type="submit" name="cinemaId" th:value="${cinema.id}" class="btn btn-primary">
+                                Buy Ticket
+                            </button>
                         </form>
                     </td>
 

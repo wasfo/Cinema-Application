@@ -13,8 +13,7 @@ import java.util.Optional;
 @Service
 public class TicketService {
 
-    private TicketRepository ticketRepository;
-
+    private final TicketRepository ticketRepository;
 
     @Autowired
     public TicketService(TicketRepository ticketRepository) {
@@ -40,7 +39,7 @@ public class TicketService {
             Ticket ticket = new Ticket(cinema.getMovie().getName(),
                     user.getEmail(), cinema, seat, ticketPrice);
 
-            saveTicket(ticket);
+            ticketRepository.save(ticket);
         } catch (Exception e) {
             throw new TicketException("one or more entities were not found");
         }
@@ -48,7 +47,4 @@ public class TicketService {
 
     }
 
-    public void saveTicket(Ticket ticket) {
-        ticketRepository.save(ticket);
-    }
 }
