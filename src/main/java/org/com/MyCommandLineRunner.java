@@ -58,19 +58,6 @@ public class MyCommandLineRunner implements CommandLineRunner {
         return cinemaRepository.findByShowDate(date);
     }
 
-    public long cleanupExpiredCinemas() {
-        List<Cinema> expiredCinemas = cinemaRepository.findPreviousCinemas();
-
-        long totalDailySum = 0;
-        for (Cinema cinema : expiredCinemas) {
-            List<Ticket> tickets = ticketRepository.findByCinemaId(cinema.getId());
-            double sum = tickets.stream().mapToDouble(Ticket::getPrice).sum();
-            totalDailySum += sum;
-        }
-
-        return totalDailySum;
-    }
-
 
     public void createUsers() {
         Role admin = new Role("ROLE_ADMIN");

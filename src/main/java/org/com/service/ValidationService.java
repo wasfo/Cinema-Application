@@ -1,34 +1,26 @@
 package org.com.service;
 
 
-import org.com.controller.CinemaController;
+import lombok.extern.slf4j.Slf4j;
 import org.com.dto.CinemaDto;
 import org.com.entity.Cinema;
-import org.com.repository.CinemaRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 
 @Service
+@Slf4j
 public class ValidationService {
-    private final Logger logger = LoggerFactory.getLogger(ValidationService.class);
-
 
     public boolean isCinemaDateBeforeCurrentDate(CinemaDto cinemaToCheck) {
         boolean isBefore = cinemaToCheck.getShowDate().before(Date.valueOf(LocalDate.now()));
         if (isBefore)
             return true;
-
-        boolean isAfter = cinemaToCheck.getShowDate().after(Date.valueOf(LocalDate.now()));
-        if (isAfter)
-            return false;
 
         if (cinemaToCheck.getShowDate().equals(Date.valueOf(LocalDate.now()))) {
             Time cinemaToCheckStartTime = Time.valueOf(cinemaToCheck.getStartTime());
@@ -38,28 +30,38 @@ public class ValidationService {
     }
 
     public boolean isCinemaTimeValid(CinemaDto cinemaToCheck, List<CinemaDto> cinemasInSameDate) {
-        logger.info("cinema to check {}", cinemaToCheck);
+        log.info("cinema to check {}", cinemaToCheck);
         Time cinemaToCheckStartTime = Time.valueOf(cinemaToCheck.getStartTime());
         Time cinemaToCheckEndTime = Time.valueOf(cinemaToCheck.getEndTime());
 
+        log.info("cinemas in same date: {}", cinemasInSameDate);
         if (cinemasInSameDate.isEmpty())
             return true;
 
-
         for (CinemaDto cinema : cinemasInSameDate) {
-            Time startTime = Time.valueOf(cinema.getStartTime());
-            Time endTime = Time.valueOf(cinema.getEndTime());
-            if (areTimesOverlapping(cinemaToCheckStartTime, cinemaToCheckEndTime, startTime, endTime))
-                return false;
+            if (Objects.equals(cinema.getRoom().getName(), cinemaToCheck.getRoom().getName())) {
+                log.info("CinemaToCheck Room {}", cinema.getRoom().getName());
+                log.info("Cinema Room {}", cinemaToCheck.getRoom().getName());
+                Time startTime = Time.valueOf(cinema.getStartTime());
+                Time endTime = Time.valueOf(cinema.getEndTime());
+                if (timesOverlap(cinemaToCheckStartTime, cinemaToCheckEndTime, startTime, endTime))
+                    return false;
+            }
         }
 
         return true;
     }
 
-    public boolean areTimesOverlapping(Time startTime1,
-                                       Time endTime1,
-                                       Time startTime2,
-                                       Time endTime2) {
+
+    public boolean timesOverlap(Time startTime1,
+                                Time endTime1,
+                                Time startTime2,
+                                Time endTime2) {
+        log.info("startTime1 {}, endTime1 {}", startTime1, endTime1);
+        log.info("startTime2 {}, endTime2 {}", startTime2, endTime2);
+
+        log.info("(endTime1.before(startTime2) {}", endTime1.before(startTime2));
+        log.info("(startTime1.after(endTime2) {}", startTime1.after(endTime2));
         if (endTime1.before(startTime2)) {
             return false;
         }

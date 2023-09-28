@@ -135,6 +135,8 @@
 
 
 
+
+
     </style>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <!-- Add Bootstrap CSS and JavaScript -->
@@ -203,11 +205,10 @@
     <div class="container">
 
         <div class="movie-card component">
-            <h2 class="movie-title">Movie Title</h2>
-            <p class="movie-details">Director: John Doe</p>
-            <p class="movie-details">Genre: Action</p>
-            <p class="movie-details">Release Date: 2023-09-30</p>
-            <p class="movie-details">Rating: 8.5</p>
+            <h2 class="movie-title" th:text="${movie.name}"></h2>
+            <p class="movie-details" th:text="'Director: ' + ${movie.director}"></p>
+            <p class="movie-details" th:text="'Genre: ' + ${movie.genre}"></p>
+            <p class="movie-details" th:text="'Rating: ' + ${movie.rating}"></p>
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#reservationModal">
                 Book Ticket
             </button>

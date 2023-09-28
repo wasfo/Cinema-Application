@@ -1,18 +1,14 @@
 package org.com.controller;
 
-
 import lombok.extern.slf4j.Slf4j;
 import org.com.dto.CinemaDto;
 import org.com.dto.MovieDto;
-import org.com.dto.TicketStatisticDto;
 import org.com.entity.*;
 import org.com.exceptions.CinemaCreationException;
 import org.com.exceptions.CinemaException;
 import org.com.exceptions.MovieDuplicateException;
 import org.com.exceptions.SeatException;
 import org.com.service.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -25,16 +21,14 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
+
 @Controller
-@Slf4j
 @RequestMapping("/admin")
+@Slf4j
+
 public class AdminController {
-
-    private final Logger logger = LoggerFactory.getLogger(AdminController.class);
-
     @Autowired
     private AdminServices adminServices;
-
 
     @GetMapping
     public String admin() {
@@ -63,19 +57,17 @@ public class AdminController {
 
         adminServices.getTicketService().createTicket(cinema, user.get(), seat.get());
 
-        logger.info("{} booked a ticket", userEmail);
+        log.info("{} booked a ticket", userEmail);
         return "redirect:/seats?cinemaId=" + cinemaId + "&success";
 
     }
 
     @GetMapping("/cinema/create")
     public String showCinemaForm(Model model) {
+
         model.addAttribute("cinemaDto", new CinemaDto());
-
         List<Movie> movieList = adminServices.getMovieService().findAllMovies();
-
         model.addAttribute("movies", movieList);
-
         List<Room> roomList = adminServices.getRoomService().findAllRooms();
         model.addAttribute("rooms", roomList);
 
@@ -97,8 +89,8 @@ public class AdminController {
         LocalTime endTime = startTime.plusMinutes(movie.getDurationInMinutes());
         cinemaDto.setEndTime(endTime.toString() + ":00");
 
-        logger.info("start time is {}", startTime);
-        logger.info("end time is {}", endTime);
+        log.info("Cinema Created! start time is {}, end time is {}", startTime, endTime);
+
 
         adminServices.getCinemaService().createCinema(cinemaDto);
         return "redirect:/cinemas";
@@ -126,20 +118,16 @@ public class AdminController {
     }
 
     @PostMapping("/cinema/delete")
-    public String deleteCinema(@RequestParam("cinemaId") long cinemaId)
-            throws CinemaException {
-
+    public String deleteCinema(@RequestParam("cinemaId") long cinemaId) throws CinemaException {
         adminServices.getCinemaService().deleteCinemaById(cinemaId);
         return "redirect:/cinemas?deleted";
     }
 
     @GetMapping("/cinema/stats")
     public String getStatistics(Model model) {
-
         long todayIncome = adminServices.getStatisticsService().getTodayIncome();
         List<Stats> stats = adminServices.getStatisticsService().findAllStats();
         long allTimeIncome = adminServices.getStatisticsService().getAllTimeIncome(stats);
-
         model.addAttribute("stats", stats);
         model.addAttribute("todayIncome", todayIncome);
         model.addAttribute("allTimeIncome", allTimeIncome);

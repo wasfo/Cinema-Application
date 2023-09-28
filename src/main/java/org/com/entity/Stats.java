@@ -24,4 +24,7 @@ public class Stats {
 
     @Column
     private long totalTicketsSold;
+
+    @Column
+    private long ticketsCount;
 }

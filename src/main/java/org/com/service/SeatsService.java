@@ -1,5 +1,6 @@
 package org.com.service;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.com.dto.SeatDto;
 import org.com.entity.Cinema;
 import org.com.entity.Seat;
@@ -18,13 +19,14 @@ import java.time.LocalDate;
 import java.util.*;
 
 @Service
+@Slf4j
 public class SeatsService {
 
     private final SeatRepository seatRepository;
     private final TicketRepository ticketRepository;
     private final ValidationService validationService;
     private final CinemaService cinemaService;
-    private final Logger logger = LoggerFactory.getLogger(SeatsService.class);
+
 
     @Autowired
     public SeatsService(SeatRepository seatRepository,
@@ -78,7 +80,7 @@ public class SeatsService {
 
         boolean isCinemaExpired = validationService.isCinemaExpired(cinema);
 
-        logger.info("is cinema {} expired {}", cinema.getId(), isCinemaExpired);
+        log.info("is cinema {} expired {}", cinema.getId(), isCinemaExpired);
 
         if (isCinemaExpired) {
             throw new CinemaException("Selected cinema is expired");

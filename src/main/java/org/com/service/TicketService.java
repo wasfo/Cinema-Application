@@ -1,9 +1,12 @@
 package org.com.service;
+
+import jakarta.transaction.Transactional;
 import org.com.entity.*;
 import org.com.exceptions.TicketException;
 import org.com.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +24,13 @@ public class TicketService {
         return ticketRepository.findTicketByUsername(username);
     }
 
+
+    public List<Ticket> findByCinemaId(long cinemaId) {
+
+        return ticketRepository.findByCinemaId(cinemaId);
+    }
+
+    @Transactional
     public void deleteTicketById(long ticketId) {
         Optional<Ticket> ticket = ticketRepository.findById(ticketId);
         if (ticket.isPresent()) {
@@ -31,7 +41,11 @@ public class TicketService {
             else
                 throw new TicketException("This ticket can't be refunded, because the date is expired");
         }
+    }
 
+    @Transactional
+    public void deleteTicketsByCinemaId(long cinemaId) {
+        ticketRepository.deleteByCinemaId(cinemaId);
     }
 
     public Optional<Ticket> findById(long id) {

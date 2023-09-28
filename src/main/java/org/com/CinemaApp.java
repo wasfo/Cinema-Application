@@ -21,8 +21,6 @@ import java.util.List;
 public class CinemaApp {
 
 
-
-
     public static void main(String[] args) {
         SpringApplication.run(CinemaApp.class, args);
     }

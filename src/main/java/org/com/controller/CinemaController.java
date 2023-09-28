@@ -3,11 +3,8 @@ package org.com.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.com.dto.CinemaDto;
-import org.com.entity.Cinema;
 import org.com.repository.CinemaRepository;
 import org.com.service.CinemaService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -20,7 +17,6 @@ import java.util.List;
 @Slf4j
 public class CinemaController {
 
-    private final Logger logger = LoggerFactory.getLogger(CinemaController.class);
     private final CinemaService cinemaService;
 
     @Autowired
@@ -33,7 +29,7 @@ public class CinemaController {
     public String listAllCinemas(Model model) {
 
         String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
-        logger.info("logged in user is {}", userEmail);
+        log.info("logged in user is {}", userEmail);
 
         List<CinemaDto> cinemas = cinemaService.findAllCinemas();
 

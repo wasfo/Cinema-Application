@@ -1,6 +1,7 @@
 package org.com.service;
 
 
+import jakarta.transaction.Transactional;
 import org.com.dto.CinemaDto;
 import org.com.entity.Cinema;
 import org.com.exceptions.CinemaCreationException;
@@ -35,6 +36,10 @@ public class CinemaService {
 
     }
 
+    public List<Cinema> findExpiredCinemas() {
+        return cinemaRepository.findCinemasBeforeCurrentDate();
+    }
+
     public List<CinemaDto> findByDate(Date date) {
         List<Cinema> cinemas = cinemaRepository.findByShowDate(date);
 
@@ -57,13 +62,13 @@ public class CinemaService {
                 .orElseThrow(() -> new CinemaException("Cinema not found"));
     }
 
+    @Transactional
     public void deleteCinemaById(long cinemaId) throws CinemaException {
         try {
             cinemaRepository.deleteById(cinemaId);
         } catch (Exception e) {
             throw new CinemaException("Cinema still has seats reserved. delete seats first");
         }
-
     }
 
     private CinemaDto convertToDto(Cinema cinema) {
@@ -82,15 +87,18 @@ public class CinemaService {
 
     public void createCinema(CinemaDto cinemaDto) throws CinemaCreationException {
 
-        List<CinemaDto> cinemas = findByDate(cinemaDto.getShowDate());
-
         boolean isCinemaDateBeforeCurrentDate = validationService.isCinemaDateBeforeCurrentDate(cinemaDto);
         if (isCinemaDateBeforeCurrentDate)
-            throw new CinemaCreationException("cinema time is before current date");
+            throw new CinemaCreationException("Cinema time is before current date");
 
+
+
+        List<CinemaDto> cinemas = findByDate(cinemaDto.getShowDate());
         boolean isValid = validationService.isCinemaTimeValid(cinemaDto, cinemas);
         if (!isValid)
-            throw new CinemaCreationException("cinema overlaps with other cinemas. check cinema list first.");
+            throw new CinemaCreationException("Cinema overlaps with other cinemas. check cinema list first.");
+
+
         Cinema cinema = new Cinema(
                 Time.valueOf(cinemaDto.getStartTime()),
                 Time.valueOf(cinemaDto.getEndTime()),

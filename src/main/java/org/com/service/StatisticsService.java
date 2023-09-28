@@ -35,11 +35,11 @@ public class StatisticsService {
     }
 
     public long getAllTimeIncome(List<Stats> stats) {
-        long total = 0;
+        long totalIncome = 0;
         for (Stats stat : stats) {
-            total += stat.getTotalTicketsSold();
+            totalIncome += stat.getTotalTicketsSold();
         }
-        return total;
+        return totalIncome;
     }
 
     private long calculateTicketsIncome(List<Ticket> tickets) {

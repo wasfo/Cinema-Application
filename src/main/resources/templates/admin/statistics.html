@@ -20,24 +20,26 @@
     <h1>Ticket Statistics</h1>
 
     <table class="table table-striped table-bordered">
-        <div class="total-income">
-            Today Income: <a th:text="${todayIncome}"> $</a>
-        </div>
+
 
         <div class="total-income">
+            Today Income: <a th:text="${todayIncome}"> $</a>
+
             Total Income: <a th:text="${allTimeIncome}"> $</a>
         </div>
 
         <thead class="thead-dark">
         <tr>
             <th>Date</th>
-            <th>Total Tickets Sold</th>
+            <th>Income</th>
+            <th>Tickets count</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="stat : ${stats}">
             <td th:text="${stat.date}"></td>
             <td th:text="${stat.totalTicketsSold}"></td>
+            <td th:text="${stat.ticketsCount}"></td>
         </tr>
         </tbody>
     </table>

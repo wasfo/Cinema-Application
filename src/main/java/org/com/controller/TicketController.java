@@ -15,13 +15,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/tickets")
 public class TicketController {
-
-    private final TicketService ticketService;
-
     @Autowired
-    public TicketController(TicketService ticketService) {
-        this.ticketService = ticketService;
-    }
+    private TicketService ticketService;
 
     @GetMapping
     public String showTickets(Model model) {
@@ -33,7 +28,6 @@ public class TicketController {
 
     @PostMapping("/delete")
     public String deleteTicket(@RequestParam("ticketId") long ticketId) throws TicketException {
-
         ticketService.deleteTicketById(ticketId);
         return "redirect:/tickets?success";
     }

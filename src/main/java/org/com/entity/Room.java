@@ -1,6 +1,4 @@
 package org.com.entity;
-
-
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;

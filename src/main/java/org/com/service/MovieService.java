@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @Service
 public class MovieService {
 
-    private MovieRepository movieRepository;
+    private final MovieRepository movieRepository;
     @Value("${images.upload.directory}")
     private String uploadDirectory;
 

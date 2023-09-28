@@ -7,19 +7,21 @@ body {
     }
 
     .card {
-        width: 350px; /* Adjust the width as desired */
-        height: 350px; /* Adjust the height as desired */
-        margin: 10px; /* Add margin to create space between cards */
+        width: 350px;
+        height: 350px;
+        margin: 10px;
         border-radius: 10px;
         box-shadow: 3 2px 5px rgba(0, 0, 0, 0.1);
     }
     .card-title{
      font-weight:bold;
     }
-    /* Custom image styling */
     .card-img-top {
-        max-height: 190px; /* Adjust the maximum height of the image */    }
-    /* Custom button styling */
+
+       max-height: 190px;
+
+            }
+
 
     .btn-primary:hover {
         background-color: #0056b3;

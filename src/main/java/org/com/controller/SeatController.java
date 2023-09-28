@@ -1,6 +1,7 @@
 package org.com.controller;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.com.dto.SeatDto;
 import org.com.entity.Cinema;
 import org.com.entity.Seat;
@@ -23,9 +24,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
+@Slf4j
 public class SeatController {
-
-    private final Logger logger = LoggerFactory.getLogger(SeatController.class);
     private final SeatsService seatsService;
     private final CinemaService cinemaService;
     private final UserService userService;
@@ -52,6 +52,8 @@ public class SeatController {
 
         model.addAttribute("seats", seats);
         model.addAttribute("cinemaId", cinemaId);
+        Cinema cinema = cinemaService.findById(cinemaId);
+        model.addAttribute("movie", cinema.getMovie());
         return "seats";
     }
 
@@ -84,7 +86,7 @@ public class SeatController {
             Cinema cinema = cinemaService.findById(cinemaId);
             Optional<Seat> seat = seatsService.reserveSeat(cinema, user.get(), Integer.parseInt(seatNumber));
             ticketService.createTicket(cinema, user.get(), seat.get());
-            logger.info("{} booked a ticket", userEmail);
+            log.info("{} booked a ticket", userEmail);
         }
 
         return "redirect:/seats?cinemaId=" + cinemaId + "&success";
