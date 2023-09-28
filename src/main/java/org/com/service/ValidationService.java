@@ -25,6 +25,11 @@ public class ValidationService {
         boolean isBefore = cinemaToCheck.getShowDate().before(Date.valueOf(LocalDate.now()));
         if (isBefore)
             return true;
+
+        boolean isAfter = cinemaToCheck.getShowDate().after(Date.valueOf(LocalDate.now()));
+        if (isAfter)
+            return false;
+
         if (cinemaToCheck.getShowDate().equals(Date.valueOf(LocalDate.now()))) {
             Time cinemaToCheckStartTime = Time.valueOf(cinemaToCheck.getStartTime());
             return cinemaToCheckStartTime.before(Time.valueOf(LocalTime.now()));
@@ -38,7 +43,7 @@ public class ValidationService {
         Time cinemaToCheckEndTime = Time.valueOf(cinemaToCheck.getEndTime());
 
         if (cinemasInSameDate.isEmpty())
-            return false;
+            return true;
 
 
         for (CinemaDto cinema : cinemasInSameDate) {

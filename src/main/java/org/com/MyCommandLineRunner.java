@@ -50,13 +50,25 @@ public class MyCommandLineRunner implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) {
-//        createUsers();
-//        createCinemas();
+
     }
 
 
     public List<Cinema> findCinemasByDate(Date date) {
         return cinemaRepository.findByShowDate(date);
+    }
+
+    public long cleanupExpiredCinemas() {
+        List<Cinema> expiredCinemas = cinemaRepository.findPreviousCinemas();
+
+        long totalDailySum = 0;
+        for (Cinema cinema : expiredCinemas) {
+            List<Ticket> tickets = ticketRepository.findByCinemaId(cinema.getId());
+            double sum = tickets.stream().mapToDouble(Ticket::getPrice).sum();
+            totalDailySum += sum;
+        }
+
+        return totalDailySum;
     }
 
 

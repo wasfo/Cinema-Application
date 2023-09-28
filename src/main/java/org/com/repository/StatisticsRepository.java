@@ -2,13 +2,14 @@ package org.com.repository;
 
 
 import org.com.entity.Stats;
-import org.com.entity.Ticket;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import java.sql.Date;
 
 @Repository
 
-public interface StatsRepository extends JpaRepository<Stats, Long> {
+public interface StatisticsRepository extends JpaRepository<Stats, Long> {
 
-    public Stats findStatsByMovieName(String movieName);
+
+    public Stats findByDate(Date date);
 }

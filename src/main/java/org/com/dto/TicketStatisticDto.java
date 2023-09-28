@@ -7,19 +7,20 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class TicketStatisticDto {
-    private String movieName;
+    private Date date;
     private Double totalTicketsSold;
 
     @Override
     public String toString() {
         return "TicketStatisticDto{" +
-                "movieName='" + movieName + '\'' +
+                "date=" + date +
                 ", totalTicketsSold=" + totalTicketsSold +
                 '}';
     }

@@ -34,7 +34,6 @@ public class UserService {
         User user = new User();
         user.setFullName(userDto.getFirstName() + " " + userDto.getLastName());
         user.setEmail(userDto.getEmail());
-
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         Role role = roleRepository.findByName(roleToGive);
         if (role == null) {

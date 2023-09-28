@@ -14,5 +14,8 @@ public interface CinemaRepository extends JpaRepository<Cinema, Long> {
     @Query("SELECT c FROM Cinema c WHERE c.showDate > CURRENT_TIMESTAMP")
     List<Cinema> findCurrentCinemas();
 
+    @Query("SELECT c FROM Cinema c WHERE c.showDate < CURRENT_TIMESTAMP")
+    List<Cinema> findPreviousCinemas();
+
     List<Cinema> findByShowDate(Date showDate);
 }

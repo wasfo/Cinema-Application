@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Date;
+
 @Entity
 @Getter
 @Setter
@@ -18,7 +20,7 @@ public class Stats {
     private long id;
 
     @Column
-    private String movieName;
+    private Date date;
 
     @Column
     private long totalTicketsSold;

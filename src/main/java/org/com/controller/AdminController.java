@@ -135,12 +135,14 @@ public class AdminController {
 
     @GetMapping("/cinema/stats")
     public String getStatistics(Model model) {
-        List<TicketStatisticDto> stats = adminServices.getStatisticsService().getMovieTicketStatistics();
-        long totalIncome = adminServices.getStatisticsService().getTotalIncome(stats);
+
+        long todayIncome = adminServices.getStatisticsService().getTodayIncome();
+        List<Stats> stats = adminServices.getStatisticsService().findAllStats();
+        long allTimeIncome = adminServices.getStatisticsService().getAllTimeIncome(stats);
 
         model.addAttribute("stats", stats);
-        model.addAttribute("totalIncome", totalIncome);
-
+        model.addAttribute("todayIncome", todayIncome);
+        model.addAttribute("allTimeIncome", allTimeIncome);
         return "admin/statistics";
     }
 
