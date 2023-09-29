@@ -10,10 +10,9 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
           crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/styles/statistics.css} ">
-
 </head>
-<body>
 
+<body>
 <div th:insert="~{navbar :: navbar}">  </div>
 
 <div class="container">
@@ -23,8 +22,10 @@
 
 
         <div class="total-income">
-            Today Income: <a th:text="${todayIncome}"> $</a>
+            Daily Income: <a th:text="${todayIncome}"> $</a>
+        </div>
 
+        <div class="total-income">
             Total Income: <a th:text="${allTimeIncome}"> $</a>
         </div>
 

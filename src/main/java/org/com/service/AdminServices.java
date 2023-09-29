@@ -2,6 +2,7 @@ package org.com.service;
 
 
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,6 +17,7 @@ public class AdminServices {
     private final UserService userService;
     private final TicketService ticketService;
 
+    @Autowired
     public AdminServices(CinemaService cinemaService,
                          SeatsService seatsService,
                          MovieService movieService,

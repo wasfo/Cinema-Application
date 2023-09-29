@@ -10,7 +10,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(SeatException.class)
     public String handleSeatsException(SeatException ex, RedirectAttributes redirectAttributes) {
-
         redirectAttributes.addFlashAttribute("errorMessage", ex.getMessage());
         return "redirect:/seats?error&cinemaId=" + ex.getCinemaId();
     }
@@ -34,7 +33,6 @@ public class GlobalExceptionHandler {
         redirectAttributes.addFlashAttribute("errorMessage", ex.getMessage());
         return "redirect:/cinemas";
     }
-
 
     @ExceptionHandler(TicketException.class)
     public String handleTicketExceptions(TicketException ex,

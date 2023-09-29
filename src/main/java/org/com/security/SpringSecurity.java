@@ -12,7 +12,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -33,10 +32,11 @@ public class SpringSecurity {
                         authorize.requestMatchers("/images/**").permitAll()
                                 .requestMatchers("/styles/**").permitAll()
                                 .requestMatchers("/register/**").permitAll()
-                                .requestMatchers("/seats/**").permitAll()
-                                .requestMatchers("/cinemas/**").permitAll()
+                                .requestMatchers("/seats/**").hasAnyRole("ADMIN", "USER")
+                                .requestMatchers("/cinemas").permitAll()
+                                .requestMatchers("/cinemas/**").hasAnyRole("ADMIN", "USER")
                                 .requestMatchers("/about").permitAll()
-                                .requestMatchers("/admin/**").permitAll()
+                                .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .anyRequest().authenticated()
                 ).csrf(AbstractHttpConfigurer::disable)
                 .formLogin(
@@ -47,6 +47,7 @@ public class SpringSecurity {
                                 .permitAll())
                 .logout(LogoutConfigurer::permitAll);
         return http.build();
+
     }
 
     @Autowired

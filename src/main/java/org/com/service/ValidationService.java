@@ -39,14 +39,14 @@ public class ValidationService {
             return true;
 
         for (CinemaDto cinema : cinemasInSameDate) {
-            if (Objects.equals(cinema.getRoom().getName(), cinemaToCheck.getRoom().getName())) {
-                log.info("CinemaToCheck Room {}", cinema.getRoom().getName());
-                log.info("Cinema Room {}", cinemaToCheck.getRoom().getName());
-                Time startTime = Time.valueOf(cinema.getStartTime());
-                Time endTime = Time.valueOf(cinema.getEndTime());
-                if (timesOverlap(cinemaToCheckStartTime, cinemaToCheckEndTime, startTime, endTime))
-                    return false;
-            }
+            if (cinema.getRoom().getName() != cinemaToCheck.getRoom().getName())
+                continue;
+
+            Time startTime = Time.valueOf(cinema.getStartTime());
+            Time endTime = Time.valueOf(cinema.getEndTime());
+            if (timesOverlap(cinemaToCheckStartTime, cinemaToCheckEndTime, startTime, endTime))
+                return false;
+
         }
 
         return true;
@@ -62,6 +62,7 @@ public class ValidationService {
 
         log.info("(endTime1.before(startTime2) {}", endTime1.before(startTime2));
         log.info("(startTime1.after(endTime2) {}", startTime1.after(endTime2));
+
         if (endTime1.before(startTime2)) {
             return false;
         }

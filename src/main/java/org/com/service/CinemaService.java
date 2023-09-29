@@ -12,21 +12,18 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class CinemaService {
 
-    private final CinemaRepository cinemaRepository;
-    private final ValidationService validationService;
-
     @Autowired
-    public CinemaService(CinemaRepository cinemaRepository,
-                         ValidationService validationService) {
-        this.cinemaRepository = cinemaRepository;
-        this.validationService = validationService;
-    }
+    private CinemaRepository cinemaRepository;
+    @Autowired
+    private ValidationService validationService;
+
 
     public List<CinemaDto> findNonExpiredCinemas() {
         List<Cinema> cinemas = cinemaRepository.findCurrentCinemas();
@@ -37,7 +34,7 @@ public class CinemaService {
     }
 
     public List<Cinema> findExpiredCinemas() {
-        return cinemaRepository.findCinemasBeforeCurrentDate();
+        return cinemaRepository.findCinemasBeforeCurrentDate(Date.valueOf(LocalDate.now()));
     }
 
     public List<CinemaDto> findByDate(Date date) {
@@ -90,7 +87,6 @@ public class CinemaService {
         boolean isCinemaDateBeforeCurrentDate = validationService.isCinemaDateBeforeCurrentDate(cinemaDto);
         if (isCinemaDateBeforeCurrentDate)
             throw new CinemaCreationException("Cinema time is before current date");
-
 
 
         List<CinemaDto> cinemas = findByDate(cinemaDto.getShowDate());
