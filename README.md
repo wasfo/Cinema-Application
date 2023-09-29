@@ -6,31 +6,34 @@ it introduces a platform for users to browse cinemas and book seats.
 
 
 ## *Entites Relationships*
-![Alt text](image link)
+![Alt text](/pics/RelationShipDiagram.png)
 
 ## *Login Screen*
 Users can login to their accounts in order to book tickets.
-![Alt text](image link)
+![Alt text](/pics/login.png)
 
 ## *Browse cinemas*
 Users can browse cinemas and see details.
-![Alt text](image link)
+![Alt text](/pics/cata.png)
 
 
 ## *Book Ticket*
 Users can book tickets by entering seat number they want to reserve.
-![Alt text](image link)
+![Alt text](/pics/seats.png)
 
 ## *Admin Manager*
 Only Admin has access to create cinemas or movies or check the statistics of the application.
 
-![Alt text](image link)
+![Alt text](/pics/manager.png)
+![Alt text](/pics/stats.png)
+![Alt text](/pics/cinema.png)
+![Alt text](/pics/movie.png)
 
 ## *Spring Security*
 Basic authentication is implemented using spring security. 
 Authorization is achieved through roles.
 
-![Alt text](image link)
+![Alt text](/pics/security.png)
 ## *Validation On User Input*
 Users requests are validated using validation service to guarantee correctness and consistency. an error message will pop up to the user indicating what went wrong.
 
