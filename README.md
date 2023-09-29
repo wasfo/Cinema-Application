@@ -8,6 +8,9 @@ it introduces a platform for users to browse cinemas and book seats.
 ## *Entites Relationships*
 ![Alt text](image link)
 
+## *Login Screen*
+Users can login to their accounts in order to book tickets.
+![Alt text](image link)
 
 ## *Browse cinemas*
 Users can browse cinemas and see details.
