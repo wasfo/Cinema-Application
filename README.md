@@ -26,14 +26,27 @@ Only Admin has access to create cinemas or movies or check the statistics of the
 
 ![Alt text](/pics/manager.png)
 ![Alt text](/pics/stats.png)
-![Alt text](/pics/cinema.png)
-![Alt text](/pics/movie.png)
+![Alt text](/pics/mc.png)
+
 
 ## *Spring Security*
 Basic authentication is implemented using spring security. 
 Authorization is achieved through roles.
 
-![Alt text](/pics/security.png)
+```javas I'm A tab
+ http.
+                authorizeHttpRequests((authorize) ->
+                        authorize.requestMatchers("/images/**").permitAll()
+                                .requestMatchers("/styles/**").permitAll()
+                                .requestMatchers("/register/**").permitAll()
+                                .requestMatchers("/seats/**").hasAnyRole("ADMIN", "USER")
+                                .requestMatchers("/cinemas").permitAll()
+                                .requestMatchers("/cinemas/**").hasAnyRole("ADMIN", "USER")
+                                .requestMatchers("/about").permitAll()
+                                .requestMatchers("/admin/**").hasRole("ADMIN")
+                                .anyRequest().authenticated()
+                )
+```
 ## *Validation On User Input*
 Users requests are validated using validation service to guarantee correctness and consistency. an error message will pop up to the user indicating what went wrong.
 
