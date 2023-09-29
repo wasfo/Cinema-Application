@@ -34,7 +34,8 @@ Basic authentication is implemented using spring security.
 Authorization is achieved through roles.
 
 ```javas I'm A tab
- http.
+
+' http.
                 authorizeHttpRequests((authorize) ->
                         authorize.requestMatchers("/images/**").permitAll()
                                 .requestMatchers("/styles/**").permitAll()
@@ -45,7 +46,7 @@ Authorization is achieved through roles.
                                 .requestMatchers("/about").permitAll()
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .anyRequest().authenticated()
-                )
+                )'
 ```
 ## *Validation On User Input*
 Users requests are validated using validation service to guarantee correctness and consistency. an error message will pop up to the user indicating what went wrong.
