@@ -48,6 +48,40 @@ Authorization is achieved through roles.
                                 .anyRequest().authenticated()
                 )
 ```
+## *Scheduler*
+I created a scheduler bean, to run every 24 hours to delete expired tickets,
+and harvest the income of those tickets by recording it into the database.
+
+```javas
+ @Scheduled(fixedRate = 60 * 60 * 24 * 1000)
+    @Transactional
+    public void harvestLoot() throws CinemaException {
+
+        List<Cinema> expiredCinemas = cinemaService.findExpiredCinemas();
+        log.info("expired cinemas {}", expiredCinemas);
+
+        if (expiredCinemas.isEmpty())
+            return;
+
+        long totalDailySum = 0;
+        long numOfTickets = 0;
+        for (Cinema cinema : expiredCinemas) {
+            List<Ticket> tickets = ticketService.findByCinemaId(cinema.getId());
+            double sum = tickets.stream().mapToDouble(Ticket::getPrice).sum();
+            numOfTickets += tickets.size();
+            totalDailySum += sum;
+        }
+        log.info("Total Daily Income {}", totalDailySum);
+
+        saveStats(totalDailySum, numOfTickets);
+
+        log.info("Daily stats saved in database");
+
+        deleteExpiredCinemas(expiredCinemas);
+    }
+```
+
+
 ## *Validation On User Input*
 Users requests are validated using validation service to guarantee correctness and consistency. an error message will pop up to the user indicating what went wrong.
 
