@@ -52,7 +52,7 @@ Authorization is achieved through roles.
 I created a scheduler bean, to run every 24 hours to delete expired tickets,
 and harvest the income of those tickets by recording it into the database.
 
-```javas
+```java
  @Scheduled(fixedRate = 60 * 60 * 24 * 1000)
     @Transactional
     public void harvestLoot() throws CinemaException {
