@@ -94,5 +94,6 @@ Users requests are validated using validation service to guarantee correctness a
 Admin requests on creating cinemas is validated:
 * Admin can't create cinemas for past dates.
 * Admin can't reserve cinema with overlapping time with other cinema in the same room.
+* Admin can't delete cinemas unless he deletes all reserved seats first.
 
 
